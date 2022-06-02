@@ -11,7 +11,11 @@ export const globalStyles = (
 				--red: #F35D55;
                 --orange: #FF7C42;
                 --yellow: #FFC502;
-                --grey: #ADB2BD;
+                --redLight: hsla(3, 87%, 64%, .4);
+                --orangeLight: hsla(18, 100%, 63%, .4);
+                --yellowLight: hsla(46, 100%, 50%, .4);
+                --greenLight: hsla(180, 53%, 51%, .2);
+                --grey: #5B616E;
 			}
 
             html {
