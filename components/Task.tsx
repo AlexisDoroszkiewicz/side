@@ -8,18 +8,16 @@ export const Context = createContext([]);
 
 export default function Task({task, ...props}) {
     const {company, details, selection, shifts} = task;
-     
-
+    
     const [failing, setFailing] = useState(false); 
     const [short, setShort] = useState(false);
     const [closable, setClosable] = useState(false);
 
     // counter for how many temp workers required for this mission, total of not ended shifts unfilled slots
+    // we use a ref to prevent unecessary rerender and only set state at the last shift
     const expectedTempWorker = useRef(0);
-
     const [expectedTempState, setExpectedTempState] = useState(0);
 
-   
     // if task has no shift, or all shifts are ended, set closable
     useEffect(() => {
         if (!shifts || shifts.every((shift: { end: string | number | Date | dayjs.Dayjs; }) => dayjs() > dayjs(shift.end))) setClosable(true);

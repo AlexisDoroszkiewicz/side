@@ -41,7 +41,7 @@ const Shift = ({shift, index, length, ...props}) => {
             setShort(true);
             setLocalShort(true);
         }
-        // if at the last shift and expectedState unset, update state for count;
+        // if at the last shift and expectedState unset, update state for count; counts double in development due to react18 behaviour, counting properly on the deployed version
         if (index == length -1 && expectedTempState == 0) setExpectedTempState(expectedTempWorker.current);
     }, [])
 
