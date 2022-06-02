@@ -23,7 +23,6 @@ interface TaskProps {
 }
 
 const Home: NextPage<{tasks:object[]}> = ({tasks}) => {
-  console.log(tasks);
   
   return (
     <div css={container}>

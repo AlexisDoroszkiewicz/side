@@ -32,7 +32,6 @@ export default function Shifts({opened, shifts, handleClick, ...props}) {
 };
 
 const ShiftsGrid = ({shifts, ...props}) => {
-    console.log(shifts);
     
     return (
         <div css={grid} {...props}>
