@@ -23,7 +23,7 @@ export default function Task({task, ...props}) {
     useEffect(() => {
         if (!shifts ||
             (shifts.every((shift: { end: string | number | Date | dayjs.Dayjs; }) => dayjs() > dayjs(shift.end))) ||
-            (details.applicants <= expectedTempState *3)) {
+            (expectedTempState && details.applicants >= (expectedTempState *3))) {
                 setClosable(true);
             }
     }, [expectedTempState])  
