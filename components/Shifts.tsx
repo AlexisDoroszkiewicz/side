@@ -4,7 +4,6 @@ import { Key, useContext, useLayoutEffect, useState } from "react";
 import { Context } from "./Task";
 
 export default function Shifts({shifts, ...props}) {
-    
 
     return (
         <div css={container}>
@@ -51,7 +50,6 @@ const Shift = ({shift, index, length, ...props}) => {
     const startHour = dayjs(shift.start).format('HH:mm');
     const endHour = dayjs(shift.end).format('HH:mm');
 
-    
     return (
         <div css={shiftContainer(ended, localFailing, localShort, filled)} {...props}>
             <small>
