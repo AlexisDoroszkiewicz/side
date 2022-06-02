@@ -1,6 +1,6 @@
 import dayjs from "dayjs"
 import { css } from "@emotion/react";
-import { useContext, useEffect } from "react";
+import { useContext, useLayoutEffect } from "react";
 import { FailingContext } from "./Task";
 
 export default function Shifts({shifts, failingState, ...props}) {
@@ -20,7 +20,7 @@ const container = css`
 const Shift = ({shift, ...props}) => {
     const [failing, setFailing] = useContext(FailingContext);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         // if shift date began, and slots not filled set failing to true
         if ((dayjs() > dayjs(shift.start)) && (shift.filledSlots < shift.slots)) setFailing(true);
     }, [])
@@ -35,8 +35,7 @@ const Shift = ({shift, ...props}) => {
                 <p>Au {end}</p>
             </small>
             <small>
-                <p>Slots : {shift.slots}</p>
-                <p>FilledSlots : {shift.filledSlots} {shift.slots == shift.filledSlots ? "✅" : "❌"}</p>
+                <p>Slots {shift.filledSlots}/{shift.slots} {shift.slots == shift.filledSlots ? "✅" : "❌"}</p>
             </small>
         </div>
     )
