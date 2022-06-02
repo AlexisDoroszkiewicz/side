@@ -3,20 +3,34 @@ import { css } from "@emotion/react";
 import { Key, useContext, useLayoutEffect, useState } from "react";
 import { Context } from "./Task";
 
-export default function Shifts({shifts, ...props}) {
+export default function Shifts({opened, shifts, handleClick, ...props}) {
 
     return (
-        <div css={container}>
-            {shifts.map((shift: { id: Key; }, i: any) => <Shift key={shift.id} index={i} length={shifts.length} shift={shift}/>)}
+        <div css={container(opened)}>
+             <button onClick={handleClick}>Close</button>
+            <div css={grid}>
+                {shifts.map((shift: { id: Key; }, i: any) => <Shift key={shift.id} index={i} length={shifts.length} shift={shift}/>)}
+            </div>
+           
         </div>
     )
 };
 
-const container = css`
-    display: flex;
-    flex-wrap: wrap;
+const container = (opened: boolean) => css`
+    display: ${opened? 'block' : 'none'};
+    position: absolute;
+    inset: 0;
+`
+
+const grid = css`
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 10rem), 1fr)) ;
     gap: 1rem;
-    display: none;
+    height: auto;
+    padding: 4rem;
+    background: white;
+
 `
 
 const Shift = ({shift, index, length, ...props}) => {

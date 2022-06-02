@@ -9,6 +9,9 @@ export const Context = createContext([]);
 export default function Task({task, ...props}) {
     const {company, details, selection, shifts} = task;
 
+    // state to display shifts modal
+    const [opened, setOpened] = useState(false);
+
     // "mission state", set by individual shifts, most impactful decides card color
     const [failing, setFailing] = useState(false); 
     const [short, setShort] = useState(false);
@@ -29,6 +32,13 @@ export default function Task({task, ...props}) {
     }, [expectedTempState])  
     // skip closed tasks ❌
     if (selection.status == 'closed') return;
+
+    const handleClick = () => {
+        setOpened(!opened);
+        if (document.body.style.overflow == "hidden") document.body.style.removeProperty('overflow');
+        else document.body.style.overflow = "hidden";
+    }
+
     return (
         <div css={taskContainer(failing, short, closable)} {...props}>
             <div css={css`display: flex; align-items: center; gap: 1rem;`}>
@@ -41,10 +51,15 @@ export default function Task({task, ...props}) {
             </div>
             <p>{selection.target}</p>
             <p>{selection.status}</p>
-            <p>Applicants : {details.applicants}</p>
-            <p>Expected : {expectedTempState}</p>
+            <div css={css`display: flex; justify-content: space-between;`}>
+                <div>
+                    <p>Applicants : {details.applicants}</p>
+                    <p>Expected : {expectedTempState}</p>
+                </div>
+                <button css={button} onClick={handleClick}>Shifts</button>
+            </div>
             <Context.Provider value={[setFailing, setShort, expectedTempWorker, expectedTempState, setExpectedTempState]}>
-                {shifts && <Shifts shifts={shifts}/>}
+                {shifts && <Shifts opened={opened} shifts={shifts} handleClick={handleClick}/>}
             </Context.Provider>
         </div>
     )
@@ -58,4 +73,18 @@ const taskContainer = (failing: boolean, short: boolean, closable: boolean) => c
     background-color: ${failing ? 'var(--redSubtle)' : short ? 'var(--yellowSubtle)' : closable && 'var(--greenSubtle)'};
     padding: 1rem; 
     border-radius: 3px;
+`
+const button = css`
+    padding: .5em 1em;
+    background-color: #3681EE;
+    border-radius: 4px;
+    color: #FFFFFF;
+    transition: all 300ms ease;
+    overflow: hidden;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    &:hover {
+        background-color: #115fcf;
+    }
 `
