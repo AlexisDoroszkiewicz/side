@@ -41,7 +41,7 @@ export default function Task({task, ...props}) {
 
     return (
         <div css={taskContainer(failing, short, closable)} {...props}>
-            <div css={css`display: flex; align-items: center; gap: 1rem; margin-bottom: 1em;`}>
+            <div css={css`display: flex; align-items: center; gap: 1rem; margin-bottom: 2em;`}>
                 {/* Should be using next Image component but had issues with AWS S3 domain config 🤷‍♂️ */}
                 <img src={company.pictureURL} width={"50"} height={"50"}/>
                 <div>
@@ -49,10 +49,11 @@ export default function Task({task, ...props}) {
                     <p>{details.jobType}</p>
                 </div>
             </div>
-            <p><span css={label}>Target : </span>{selection.target}</p>
-            <p><span css={label}>Status : </span>{selection.status}</p>
-            <div css={css`display: flex; justify-content: space-between;`}>
+            
+            <div css={css`display: flex; justify-content: space-between; align-items: flex-end`}>
                 <div>
+                    <p><span css={label}>Target : </span>{selection.target}</p>
+                    <p><span css={label}>Status : </span>{selection.status}</p>
                     <p><span css={label}>Applicants : </span><span css={css``}>{details.applicants}</span> / <span css={css`color: ${expectedTempState == 0 && 'var(--red)'};`}>{expectedTempState}</span></p>
                 </div>
                 <button css={button} onClick={handleClick} disabled={(!shifts)}>Shifts</button>
@@ -72,6 +73,9 @@ const taskContainer = (failing: boolean, short: boolean, closable: boolean) => c
     background-color: ${failing ? 'var(--redSubtle)' : short ? 'var(--yellowSubtle)' : closable && 'var(--greenSubtle)'};
     padding: 1rem; 
     border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     img {
         border: 1px solid var(--black);
         border-radius: 3px;
@@ -90,6 +94,7 @@ const button = css`
     align-items: center;
     cursor: pointer;
     border: none;
+    height: fit-content;
     &:hover {
         background-color: var(--blueDark);
     }
