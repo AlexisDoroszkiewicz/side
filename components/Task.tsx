@@ -54,7 +54,7 @@ export default function Task({task, ...props}) {
                 <div>
                     <p><span css={label}>Target : </span>{selection.target}</p>
                     <p><span css={label}>Status : </span>{selection.status}</p>
-                    <p><span css={label}>Applicants : </span><span css={css``}>{details.applicants}</span> / <span css={css`color: ${expectedTempState == 0 && 'var(--red)'};`}>{expectedTempState}</span></p>
+                    <p><span css={label}>Applicants : </span><span css={css``}>{details.applicants}</span> / <span css={css`color: ${expectedTempState == 0 && 'var(--red)'};`}>{expectedTempState}</span> {details.applicants >= expectedTempState *3 && expectedTempState != 0 && "✅"}</p>
                 </div>
                 <button css={button} onClick={handleClick} disabled={(!shifts)}>Shifts</button>
             </div>
