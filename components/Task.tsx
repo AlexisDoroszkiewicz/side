@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import { useState, createContext, useEffect, useRef } from "react";
 import dayjs from "dayjs";
 
-// create context to prevent props drilling
+// create context to avoid props drilling
 export const Context = createContext([]);
 
 export default function Task({task, ...props}) {
@@ -17,7 +17,7 @@ export default function Task({task, ...props}) {
     const [short, setShort] = useState(false);
     const [closable, setClosable] = useState(false);
 
-    // counter for how many temp workers required for this mission, total of not ended shifts unfilled slots
+    // counter for how many temp workers required for this mission, total of non-ended shifts unfilled slots
     // we use a ref to prevent unecessary rerender and only set state at the last shift
     const expectedTempWorker = useRef(0);
     const [expectedTempState, setExpectedTempState] = useState(0);
@@ -41,7 +41,7 @@ export default function Task({task, ...props}) {
 
     return (
         <div css={taskContainer(failing, short, closable)} {...props}>
-            <div css={css`display: flex; align-items: center; gap: 1rem;`}>
+            <div css={css`display: flex; align-items: center; gap: 1rem; margin-bottom: 1em;`}>
                 {/* Should be using next Image component but had issues with AWS S3 domain config 🤷‍♂️ */}
                 <img src={company.pictureURL} width={"50"} height={"50"}/>
                 <div>
@@ -49,12 +49,11 @@ export default function Task({task, ...props}) {
                     <p>{details.jobType}</p>
                 </div>
             </div>
-            <p>{selection.target}</p>
-            <p>{selection.status}</p>
+            <p><span css={label}>Target : </span>{selection.target}</p>
+            <p><span css={label}>Status : </span>{selection.status}</p>
             <div css={css`display: flex; justify-content: space-between;`}>
                 <div>
-                    <p>Applicants : {details.applicants}</p>
-                    <p>Expected : {expectedTempState}</p>
+                    <p><span css={label}>Applicants : </span><span css={css``}>{details.applicants}</span> / <span css={css`color: ${expectedTempState == 0 && 'var(--red)'};`}>{expectedTempState}</span></p>
                 </div>
                 <button css={button} onClick={handleClick} disabled={(!shifts)}>Shifts</button>
             </div>
@@ -73,7 +72,14 @@ const taskContainer = (failing: boolean, short: boolean, closable: boolean) => c
     background-color: ${failing ? 'var(--redSubtle)' : short ? 'var(--yellowSubtle)' : closable && 'var(--greenSubtle)'};
     padding: 1rem; 
     border-radius: 3px;
+    img {
+        border: 1px solid var(--black);
+        border-radius: 3px;
+    }
 `
+
+const label = css`color: var(--grey);`
+
 const button = css`
     padding: .5em 1em;
     background-color: var(--blue);

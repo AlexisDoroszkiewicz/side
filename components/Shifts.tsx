@@ -31,9 +31,9 @@ const container = (opened: boolean) => css`
     bottom: 0;
 `
 const frame = css`
-    border-radius: 20px;
+    border-radius: 10px;
     overflow: hidden;
-    border: 1px solid black;
+    border: 1px solid var(--black);
     position: relative;
 `
 
