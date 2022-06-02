@@ -31,7 +31,6 @@ export default function Task({task, ...props}) {
     if (selection.status == 'closed') return;
     return (
         <div css={taskContainer(failing, short, closable)} {...props}>
-            <h1>{`${closable}`}</h1>
             <div css={css`display: flex; align-items: center; gap: 1rem;`}>
                 {/* Should be using next Image component but had issues with AWS S3 domain config 🤷‍♂️ */}
                 <img src={company.pictureURL} width={"50"} height={"50"}/>
@@ -47,7 +46,6 @@ export default function Task({task, ...props}) {
             <Context.Provider value={[setFailing, setShort, expectedTempWorker, expectedTempState, setExpectedTempState]}>
                 {shifts && <Shifts shifts={shifts}/>}
             </Context.Provider>
-            {closable && <h2>CLOSABLE</h2>}
         </div>
     )
 };
@@ -55,6 +53,8 @@ export default function Task({task, ...props}) {
 const taskContainer = (failing: boolean, short: boolean, closable: boolean) => css`
     /* order tasks */
     order: ${failing ? '-3' : short ? '-2' : closable && '1'};
+    border: 2px solid;
+    border-color: ${failing ? 'var(--red)' : short ? 'var(--yellow)' : closable && 'var(--green)'};
     padding: 1rem; 
-    margin: 1rem;
+    border-radius: 3px;
 `

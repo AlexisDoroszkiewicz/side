@@ -16,7 +16,7 @@ const container = css`
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    /* display: none; */
+    display: none;
 `
 
 const Shift = ({shift, index, length, ...props}) => {

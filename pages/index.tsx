@@ -39,7 +39,8 @@ const Home: NextPage<{tasks:object[]}> = ({tasks}) => {
 export default Home
 
 const container = css`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(400px, 100%), 1fr));
   gap: 1rem;
+  margin: 1rem;
 `
