@@ -8,6 +8,7 @@ export const globalStyles = (
 			:root {
                 --black: #272A2E;
                 --blue: #3681EE;
+                --blueLight: #EBF2FE;
                 --blueDark: #115fcf;
                 --green: #41C5C5;
 				--red: #F35D55;
