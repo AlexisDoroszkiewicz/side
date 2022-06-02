@@ -11,6 +11,7 @@ export const globalStyles = (
 				--red: #F35D55;
                 --orange: #FF7C42;
                 --yellow: #FFC502;
+                --grey: #ADB2BD;
 			}
 
             html {

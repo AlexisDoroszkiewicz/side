@@ -12,22 +12,18 @@ export default function Shifts({shifts, ...props}) {
 };
 
 const container = css`
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 7.125rem), 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
 `
 
 const Shift = ({shift, index, ...props}) => {
     const [setFailing] = useContext(Context);
-
-    // do not show shift if already ended (unnecessary visual clutter), update state
-    if (dayjs() > dayjs(shift.end)) {
-        return;
-    }
+    const ended = dayjs() > dayjs(shift.end);
 
     useLayoutEffect(() => {
-        // if shift date began, and slots not filled set failing to true
-        if ((dayjs() > dayjs(shift.start)) && (shift.filledSlots < shift.slots)) setFailing(true);
+        // if shift began, is not ended, and slots not filled set failing to true
+        if (!ended && (dayjs() > dayjs(shift.start)) && (shift.filledSlots < shift.slots)) setFailing(true);
     }, [])
 
     const startDay = dayjs(shift.start).format('DD/MM/YYYY');
@@ -37,10 +33,10 @@ const Shift = ({shift, index, ...props}) => {
     const endHour = dayjs(shift.end).format('HH:mm')
 
     return (
-        <div css={shiftContainer} {...props}>
+        <div css={shiftContainer(ended)} {...props}>
             <small>
                 <p>{startDay == endDay ? startDay : `Du ${startDay} au ${endDay}`}</p>
-                <p>{`${startHour} > ${endHour}`}</p>
+                <p>{startHour} <span css={css`color: var(--grey);`}>{`>`}</span> {endHour}</p>
             </small>
             <small css={css`display: flex; align-items: center;`}>
                 <p>Slots {shift.filledSlots}/{shift.slots}</p> {shift.slots == shift.filledSlots ? 
@@ -51,7 +47,8 @@ const Shift = ({shift, index, ...props}) => {
     )
 }
 
-const shiftContainer = css`
+const shiftContainer = (ended: boolean) =>css`
+    opacity: ${ended && 0.4};
     border: 1px solid black;
     padding: 1em;
 `

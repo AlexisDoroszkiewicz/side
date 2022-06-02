@@ -3,6 +3,7 @@ import { css } from "@emotion/react";
 import { useState, createContext, useEffect } from "react";
 import dayjs from "dayjs";
 
+// create context to prevent props drilling
 export const Context = createContext([]);
 
 export default function Task({task, ...props}) {
@@ -16,7 +17,7 @@ export default function Task({task, ...props}) {
     if (selection.status == 'closed') return;
     // if task has no shift, or all shifts are ended, set closable
     useEffect(() => {
-        if (!shifts || shifts.every(shift => dayjs() > dayjs(shift.end))) setClosable(true);
+        if (!shifts || shifts.every((shift: { end: string | number | Date | dayjs.Dayjs; }) => dayjs() > dayjs(shift.end))) setClosable(true);
     }, [])  
 
     return (
@@ -38,10 +39,10 @@ export default function Task({task, ...props}) {
     )
 };
 
-const taskContainer = (failing, short, closable) => css`
+const taskContainer = (failing: boolean, short: boolean, closable: boolean) => css`
     /* order tasks */
     order: ${failing ? '-3' : short ? '-2' : closable && '1'};
+    border: ${failing && '2px solid var(--red)'};
     padding: 1rem; 
     margin: 1rem;
-    border: ${failing && '2px solid var(--red)'};
 `
