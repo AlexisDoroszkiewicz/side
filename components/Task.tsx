@@ -55,6 +55,7 @@ const taskContainer = (failing: boolean, short: boolean, closable: boolean) => c
     order: ${failing ? '-3' : short ? '-2' : closable && '1'};
     border: 2px solid;
     border-color: ${failing ? 'var(--red)' : short ? 'var(--yellow)' : closable && 'var(--green)'};
+    background-color: ${failing ? 'var(--redSubtle)' : short ? 'var(--yellowSubtle)' : closable && 'var(--greenSubtle)'};
     padding: 1rem; 
     border-radius: 3px;
 `
