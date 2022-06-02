@@ -8,9 +8,8 @@ export const Context = createContext([]);
 
 export default function Task({task, ...props}) {
     const {company, details, selection, shifts} = task;
-     // skip closed tasks ❌
-     if (selection.status == 'closed') return;
      
+
     const [failing, setFailing] = useState(false); 
     const [short, setShort] = useState(false);
     const [closable, setClosable] = useState(false);
@@ -25,7 +24,8 @@ export default function Task({task, ...props}) {
     useEffect(() => {
         if (!shifts || shifts.every((shift: { end: string | number | Date | dayjs.Dayjs; }) => dayjs() > dayjs(shift.end))) setClosable(true);
     }, [])  
-
+    // skip closed tasks ❌
+    if (selection.status == 'closed') return;
     return (
         <div css={taskContainer(failing, short, closable)} {...props}>
             <div css={css`display: flex; align-items: center; gap: 1rem;`}>
