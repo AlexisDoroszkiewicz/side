@@ -1,12 +1,12 @@
 import dayjs from "dayjs"
 import { css } from "@emotion/react";
 import { useContext, useLayoutEffect } from "react";
-import { FailingContext } from "./Task";
+import { Context } from "./Task";
 
-export default function Shifts({shifts, failingState, ...props}) {
+export default function Shifts({shifts, ...props}) {
     return (
         <div css={container}>
-            {shifts.map(shift => <Shift key={shift.id} shift={shift}/>)}
+            {shifts.map((shift, i) => <Shift key={shift.id} index={i} shift={shift}/>)}
         </div>
     )
 };
@@ -17,8 +17,13 @@ const container = css`
     gap: 1rem;
 `
 
-const Shift = ({shift, ...props}) => {
-    const [failing, setFailing] = useContext(FailingContext);
+const Shift = ({shift, index, ...props}) => {
+    const [setFailing] = useContext(Context);
+
+    // do not show shift if already ended (unnecessary visual clutter), update state
+    if (dayjs() > dayjs(shift.end)) {
+        return;
+    }
 
     useLayoutEffect(() => {
         // if shift date began, and slots not filled set failing to true

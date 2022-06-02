@@ -17,7 +17,7 @@ interface TaskProps {
   company: object,
   details: object,
   selection: object,
-  shifts: object[],
+  shifts?: object[],
   updatedAt?: string,
 }
 
