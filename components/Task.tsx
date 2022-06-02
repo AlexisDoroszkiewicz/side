@@ -56,7 +56,7 @@ export default function Task({task, ...props}) {
                     <p>Applicants : {details.applicants}</p>
                     <p>Expected : {expectedTempState}</p>
                 </div>
-                <button css={button} onClick={handleClick}>Shifts</button>
+                <button css={button} onClick={handleClick} disabled={(!shifts)}>Shifts</button>
             </div>
             <Context.Provider value={[setFailing, setShort, expectedTempWorker, expectedTempState, setExpectedTempState]}>
                 {shifts && <Shifts opened={opened} shifts={shifts} handleClick={handleClick}/>}
@@ -76,7 +76,7 @@ const taskContainer = (failing: boolean, short: boolean, closable: boolean) => c
 `
 const button = css`
     padding: .5em 1em;
-    background-color: #3681EE;
+    background-color: var(--blue);
     border-radius: 4px;
     color: #FFFFFF;
     transition: all 300ms ease;
@@ -85,6 +85,9 @@ const button = css`
     cursor: pointer;
     border: none;
     &:hover {
-        background-color: #115fcf;
+        background-color: var(--blueDark);
+    }
+    &[disabled] {
+        background-color: var(--greyLight);
     }
 `
