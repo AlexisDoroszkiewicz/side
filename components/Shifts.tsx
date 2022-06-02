@@ -1,7 +1,9 @@
 import dayjs from "dayjs"
 import { css } from "@emotion/react";
+import { useContext, useEffect } from "react";
+import { FailingContext } from "./Task";
 
-export default function Shifts({shifts, ...props}) {
+export default function Shifts({shifts, failingState, ...props}) {
     return (
         <div css={container}>
             {shifts.map(shift => <Shift key={shift.id} shift={shift}/>)}
@@ -16,6 +18,13 @@ const container = css`
 `
 
 const Shift = ({shift, ...props}) => {
+    const [failing, setFailing] = useContext(FailingContext);
+
+    useEffect(() => {
+        // if shift date began, and slots not filled set failing to true
+        if ((dayjs() > dayjs(shift.start)) && (shift.filledSlots < shift.slots)) setFailing(true);
+    }, [])
+
     const start = dayjs(shift.start).format('DD/MM/YYYY HH:mm');
     const end = dayjs(shift.end).format('DD/MM/YYYY HH:mm');
 
