@@ -3,9 +3,8 @@ import data from "@public/tasks.json"
 import Task from '@components/Task';
 import { css } from '@emotion/react';
 
-// In a real scenario data will be dynamically generated and we will use getServerSideProps with calls to paginated API
 // For real time updates will need to look into real time database and hooks
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const tasks = Object.values({...data})
 
   return {
