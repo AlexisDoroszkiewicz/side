@@ -1,11 +1,16 @@
-import dayjs from "dayjs"
-import { css } from "@emotion/react";
+import { useContext } from "react";
 import { Key } from "react";
-import Shift from "./Shift";
+import { css } from "@emotion/react";
+import dayjs from "dayjs"
+import Shift from "@components/Shift";
 import CloseBtn from "@components/CloseBtn";
+import Target from "@components/Target";
+import Applicants from "@components/Applicants";
+import { Context } from "@components/Task";
 
 export default function Shifts({opened, shifts, handleClick, task, ...props}) {
-
+    const {expectedTempState} = useContext(Context);
+    
     // split shifts into ended and upcoming so we can render different tabs
     // Should refacto -> use REACT PORTALS instead to move shifts in corresponding tab
     let upComingShifts = [];
@@ -28,6 +33,8 @@ export default function Shifts({opened, shifts, handleClick, task, ...props}) {
                     <div css={menu}>
                         <div>
                             <h3 css={css`display: inline;`}>{task.company.name}</h3> - {task.details.jobType}
+                            <Target>{task.selection.target}</Target>
+                            <Applicants amount={task.details.applicants} expected={expectedTempState}/>
                         </div>
                         <CloseBtn handler={handleClick}/>
                     </div>
@@ -82,7 +89,7 @@ const menu = css`
     z-index: 99;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     padding-left: 4rem;
     padding-right: 1rem;
     padding-top: 0.5rem;

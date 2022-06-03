@@ -8,7 +8,7 @@ import Date from "@components/Date"
 export default function Shift ({shift, index, length, ...props}) {
 
     // SHOULD REFACTO THIS -> Lift state up, handle state via TASK as an array
-    const [setFailing, setShort, expectedTempWorker, expectedTempState, setExpectedTempState] = useContext(Context);
+    const {setFailing = console.log, setShort = console.log, expectedTempWorker = {current: 0}, expectedTempState = 0, setExpectedTempState = console.log} = {...useContext(Context)};
     const ended = dayjs() > dayjs(shift.end);
     const filled = (shift.slots == shift.filledSlots);
     const [localFailing, setLocalFailing] = useState(false);

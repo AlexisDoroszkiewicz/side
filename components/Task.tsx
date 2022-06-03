@@ -8,7 +8,10 @@ import Target from "@components/Target";
 import CloseBtn from "@components/CloseBtn";
 
 // create context to avoid props drilling
-export const Context = createContext([]);
+interface ContextProps {
+    [key: string]: any,
+}
+export const Context = createContext<ContextProps>({});
 
 export default function Task({task, ...props}) {
     const {company, details, selection, shifts} = task;
@@ -80,7 +83,7 @@ export default function Task({task, ...props}) {
                 </div>
                 <button css={button} onClick={handleClick} disabled={(!shifts)}>Shifts</button>
             </div>
-            <Context.Provider value={[setFailing, setShort, expectedTempWorker, expectedTempState, setExpectedTempState]}>
+            <Context.Provider value={{setFailing, setShort, expectedTempWorker, expectedTempState, setExpectedTempState}}>
                 {shifts && <Shifts opened={opened} shifts={shifts} handleClick={handleClick} task={task}/>}
             </Context.Provider>
         </div>
