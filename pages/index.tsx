@@ -48,25 +48,26 @@ const Home: NextPage<{ tasks: object[] }> = ({ tasks }) => {
 				/>
 				<meta name="description" content="Tasks list app"></meta>
 			</Head>
-			<main css={main}>
-				<Context.Provider
-					value={{
-						selected,
-						setSelected,
-						date,
-						setDate,
-						minWorker,
-						setMinWorker,
-					}}>
-					<Filters />
+
+			<Context.Provider
+				value={{
+					selected,
+					setSelected,
+					date,
+					setDate,
+					minWorker,
+					setMinWorker,
+				}}>
+				<Filters />
+				<main css={main}>
 					<div css={container}>
 						{/* need to add: if this has no child, show error message, useful for filters */}
 						{tasks.map((task: TaskProps) => {
 							return <Task key={task.id} task={task} />;
 						})}
 					</div>
-				</Context.Provider>
-			</main>
+				</main>
+			</Context.Provider>
 		</>
 	);
 };

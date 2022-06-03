@@ -12,7 +12,7 @@ export default function Task({ task, ...props }) {
 	const { company, details, selection, shifts } = task;
 
 	// context used for filters
-	const { selected, date, range } = useContext(Context);
+	const { selected, date, minWorker } = useContext(Context);
 	const tag = task.selection.status;
 
 	// ref to target task 🎯
@@ -126,9 +126,14 @@ export default function Task({ task, ...props }) {
 	// has to be at the bottom since cant run hooks conditionally
 	if (selected != "closed" && selection.status == "closed") return;
 	// filter logic
-	if (selected && selected != tag) return;
-	if (date && dayMatch == false) return;
-	if (ready == false) return;
+	if (
+		(selected && selected != tag) ||
+		(date && dayMatch == false) ||
+		expected < minWorker ||
+		ready == false
+	) {
+		return;
+	}
 
 	return (
 		<div

@@ -10,7 +10,7 @@ export const globalStyles = (
 				--blue: #3681ee;
 				--blueLight: #ebf2fe;
 				--blueDark: #115fcf;
-				--skyBlue: #59a6f9;
+				--skyBlue: #f7faff;
 				--pink: #f498bc;
 				--green: #41c5c5;
 				--red: #f35d55;
@@ -87,7 +87,7 @@ export const globalStyles = (
 				border-color: var(--blue);
 			}
 			.rc-slider-track {
-				background-color: var(--skyBlue);
+				background-color: var(--blue);
 			}
 		`}
 	/>
