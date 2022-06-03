@@ -23,7 +23,7 @@ export const globalStyles = (
                 --redSubtle: hsla(3, 87%, 64%, .1);
                 --orangeSubtle: hsla(18, 100%, 63%, .05);
                 --yellowSubtle: hsla(46, 100%, 50%, .05);
-                --greenSubtle: hsla(180, 53%, 51%, .1);
+                --greenSubtle: hsla(180, 53%, 51%, .25);
                 --grey: #5B616E;
                 --greyLight: #ADB2BD;
                 --greySubtle: hsla(221, 11%, 7%, .01);

@@ -7,10 +7,11 @@ export default function Status({children}) {
 };
 
 const status = (status: string) => css`
-    --color: ${status == 'ongoing' ? 'var(--pink)' : status == 'ready' ? 'var(--green)' : 'var(--grey)'};
+    --color: ${status == 'ongoing' ? 'var(--blue)' : status == 'ready' ? 'var(--green)' : 'var(--grey)'};
     color: var(--color);
-    border: 1px solid var(--color);
+    border: 2px solid var(--color);
     background-color: white;
-    padding: 0.25em 0.5em;
+    padding: 0.15em 0.5em;
     border-radius: 3px;
+    font-weight: 500;
 `
