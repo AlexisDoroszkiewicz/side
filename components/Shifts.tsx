@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { Key } from "react";
 import { css } from "@emotion/react";
 import dayjs from "dayjs"
@@ -6,11 +5,9 @@ import Shift from "@components/Shift";
 import CloseBtn from "@components/CloseBtn";
 import Target from "@components/Target";
 import Applicants from "@components/Applicants";
-import { Context } from "@components/Task";
 import Status from "@components/Status";
 
-export default function Shifts({opened, shifts, handleClick, task, ...props}) {
-    const {expectedTempState} = useContext(Context);
+export default function Shifts({opened, shifts, handleClick, task, expected, ...props}) {
     
     // split shifts into ended and upcoming so we can render different tabs
     // Should refacto -> use REACT PORTALS instead to move shifts in corresponding tab
@@ -39,7 +36,7 @@ export default function Shifts({opened, shifts, handleClick, task, ...props}) {
                             </div>
                             <div>
                                 <Target>{task.selection.target}</Target>
-                                <Applicants amount={task.details.applicants} expected={expectedTempState}/>
+                                <Applicants amount={task.details.applicants} expected={expected}/>
                             </div>
                             <CloseBtn handler={handleClick} css={css`position: absolute; top: 0.5rem; right: 0.5rem;`}/>
                         </div>
