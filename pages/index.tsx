@@ -1,8 +1,9 @@
 import type { NextPage } from 'next'
+import Head from 'next/head';
+import { css } from '@emotion/react';
 import data from "@public/tasks.json"
 import Task from '@components/Task';
-import { css } from '@emotion/react';
-import Head from 'next/head';
+import Filters from '@components/Filters';
 
 // For real time updates will need to look into real time database and hooks
 export async function getServerSideProps() {

@@ -2,7 +2,7 @@ import { useState, useLayoutEffect, useRef } from "react";
 import { css } from "@emotion/react";
 import dayjs from "dayjs";
 import Applicants from "@components/Applicants";
-import Shifts from "@components/Shifts";
+import ShiftsModal from "@components/ShiftsModal";
 import Status from "@components/Status"
 import Target from "@components/Target";
 import CloseBtn from "@components/CloseBtn";
@@ -115,13 +115,13 @@ export default function Task({task, ...props}) {
             
             <div css={css`display: flex; justify-content: space-between; align-items: flex-end`}>
                 <div>
-                    <Target>{selection.target}</Target>
                     <Applicants amount={details.applicants} expected={expected}/>
+                    <Target>{selection.target}</Target>
                 </div>
                 {/* disable button if no shifts */}
                 <button css={button} onClick={handleClick} disabled={(!shifts)}>Shifts</button>
             </div>
-            {shifts && <Shifts opened={opened} shifts={shifts} handleClick={handleClick} task={task} expected={expected} states={stateArr}/>} 
+            {shifts && <ShiftsModal opened={opened} shifts={shifts} handleClick={handleClick} task={task} expected={expected} states={stateArr}/>} 
         </div>
     )
 };

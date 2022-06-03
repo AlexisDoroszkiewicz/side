@@ -36,8 +36,8 @@ export default function Shifts({opened, shifts, handleClick, task, expected, sta
                                 <p>{task.details.jobType} : <Status>{task.selection.status}</Status></p>
                             </div>
                             <div>
-                                <Target>{task.selection.target}</Target>
                                 <Applicants amount={task.details.applicants} expected={expected}/>
+                                <Target>{task.selection.target}</Target>
                             </div>
                             <CloseBtn handler={handleClick} css={css`position: absolute; top: 0.5rem; right: 0.5rem;`}/>
                         </div>
