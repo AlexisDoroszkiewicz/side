@@ -23,8 +23,8 @@ export default function Shifts({opened, shifts, handleClick, task, ...props}) {
                             <svg   width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16.596 8.11a.5.5 0 010 .708L13.414 12l3.182 3.182a.5.5 0 010 .707l-.707.707a.5.5 0 01-.707 0L12 13.414l-3.182 3.182a.5.5 0 01-.707 0l-.707-.707a.5.5 0 010-.707L10.586 12 7.404 8.818a.5.5 0 010-.707l.707-.707a.5.5 0 01.707 0L12 10.586l3.182-3.182a.5.5 0 01.707 0l.707.707z" fillRule="nonzero"></path></svg>
                         </button>
                     </div>
-                    {/* {upComingShifts.length != 0 && <ShiftsGrid shifts={upComingShifts}/>}
-                    {endedShifts.length != 0 && <ShiftsGrid shifts={endedShifts}/>} */}
+                    {upComingShifts.length != 0 && <ShiftsGrid shifts={upComingShifts}/>}
+                    {endedShifts.length != 0 && <ShiftsGrid shifts={endedShifts}/>}
                 </div>
             </div>
         </div>
@@ -41,7 +41,8 @@ const ShiftsGrid = ({shifts, ...props}) => {
 }
 
 const container = (opened: boolean) => css`
-    display: ${opened? 'grid' : 'none'};
+    display: none;
+    display: ${opened && 'grid'};
     place-items: center;
     position: fixed;
     top: 0;
