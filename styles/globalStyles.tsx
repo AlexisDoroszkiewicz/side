@@ -33,6 +33,10 @@ export const globalStyles = (
                 font-family: "Roboto", sans-serif;
                 font-color: var(--black);
             }
+
+            img {
+                background-color: white;
+            }
             /* width */
             ::-webkit-scrollbar {
             width: 6px;

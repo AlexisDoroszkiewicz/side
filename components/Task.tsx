@@ -2,6 +2,7 @@ import Shifts from "@components/Shifts";
 import { css } from "@emotion/react";
 import { useState, createContext, useLayoutEffect, useRef } from "react";
 import dayjs from "dayjs";
+import Status from "@components/Status"
 
 // create context to avoid props drilling
 export const Context = createContext([]);
@@ -50,7 +51,7 @@ export default function Task({task, ...props}) {
                 <img src={company.pictureURL} width={"50"} height={"50"}/>
                 <div>
                     <h3>{company.name}</h3>
-                    <p>{details.jobType} : <small css={status(selection.status)}>{selection.status}</small></p>
+                    <p>{details.jobType} : <Status>{selection.status}</Status></p>
                 </div>
             </div>
             
@@ -84,14 +85,7 @@ const taskContainer = (failing: boolean, short: boolean, closable: boolean, expe
         border-radius: 3px;
     }
 `
-const status = (status: string) => css`
-    --color: ${status == 'ongoing' ? 'var(--pink)' : status == 'ready' ? 'var(--green)' : 'var(--grey)'};
-    color: var(--color);
-    border: 1px solid var(--color);
-    background-color: white;
-    padding: 0.25em 0.5em;
-    border-radius: 3px;
-`
+
 const label = css`color: var(--grey);`
 
 const button = css`
