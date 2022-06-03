@@ -42,7 +42,7 @@ export default function Shift ({shift, index, length, ...props}) {
 const shiftContainer = (ended: boolean, localFailing:boolean, localShort:boolean, filled: boolean) =>css`
     opacity: ${ended && 0.4};
     background-color: ${filled ? "var(--greenLight)" :localFailing ? "var(--redLight)" : localShort && "var(--yellowLight)"};
-    border: 1px solid black;
+    border: 1px solid ${filled ? "var(--green)" :localFailing ? "var(--red)" : localShort ? "var(--orange)" : 'var(--grey)'};;
     padding: 1em;
     border-radius: 3px;
     display: flex;
