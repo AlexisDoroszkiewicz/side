@@ -31,6 +31,7 @@ export default function Shifts({opened, shifts, handleClick, task, ...props}) {
                         </button>
                     </div>
                     {upComingShifts.length != 0 && <ShiftsGrid shifts={upComingShifts}/>}
+                    {upComingShifts.length != 0 && endedShifts.length != 0 && <hr></hr>}
                     {endedShifts.length != 0 && <div><ShiftsGrid shifts={endedShifts}/></div>}
                 </div>
             </div>
