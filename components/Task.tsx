@@ -44,7 +44,7 @@ export default function Task({task, ...props}) {
     }
 
     return (
-        <div css={taskContainer(failing, short, closable, expectedTempState)} {...props}>
+        <div css={taskContainer(failing, short, closable, expectedTempState, noUpcomingShift)} {...props}>
             <div css={css`display: flex; align-items: center; gap: 1rem; margin-bottom: 2em;`}>
                 {/* Should be using next Image component but had issues with AWS S3 domain config 🤷‍♂️ */}
                 <img src={company.pictureURL} width={"50"} height={"50"}/>
@@ -68,12 +68,12 @@ export default function Task({task, ...props}) {
     )
 };
 
-const taskContainer = (failing: boolean, short: boolean, closable: boolean, expectedTempState: number) => css`
+const taskContainer = (failing: boolean, short: boolean, closable: boolean, expectedTempState: number, noUpcomingShift: boolean) => css`
     /* order tasks */
     order: ${failing ? '-3' : short ? '-2' : closable ? '-1' : expectedTempState == 0 && '1'};
     border: 2px solid;
     border-color: ${failing ? 'var(--red)' : short ? 'var(--yellow)' : closable ? 'var(--green)' : 'var(--greyLight)'};
-    background-color: ${failing ? 'var(--redSubtle)' : short ? 'var(--yellowSubtle)' : closable && 'var(--greenSubtle)'};
+    background-color: ${failing ? 'var(--redSubtle)' : short ? 'var(--yellowSubtle)' : closable ? 'var(--greenSubtle)' : noUpcomingShift && 'var(--greySubtle)'};
     padding: 1rem; 
     border-radius: 3px;
     display: flex;

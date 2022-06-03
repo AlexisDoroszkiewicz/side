@@ -6,7 +6,7 @@ import Shift from "./Shift";
 export default function Shifts({opened, shifts, handleClick, task, ...props}) {
 
     // split shifts into ended and upcoming so we can render different tabs
-    // Should refactp -> use REACT PORTALS instead to move shifts in corresponding tab
+    // Should refacto -> use REACT PORTALS instead to move shifts in corresponding tab
     let upComingShifts = [];
     let endedShifts = [];
 
@@ -26,7 +26,7 @@ export default function Shifts({opened, shifts, handleClick, task, ...props}) {
                         </button>
                     </div>
                     {upComingShifts.length != 0 && <ShiftsGrid shifts={upComingShifts}/>}
-                    {endedShifts.length != 0 && <ShiftsGrid shifts={endedShifts}/>}
+                    {endedShifts.length != 0 && <div><ShiftsGrid shifts={endedShifts}/></div>}
                 </div>
             </div>
         </div>

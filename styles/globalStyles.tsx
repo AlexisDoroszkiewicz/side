@@ -26,6 +26,7 @@ export const globalStyles = (
                 --greenSubtle: hsla(180, 53%, 51%, .05);
                 --grey: #5B616E;
                 --greyLight: #ADB2BD;
+                --greySubtle: hsla(221, 11%, 7%, .05);
 			}
 
             html {
