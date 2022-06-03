@@ -7,6 +7,7 @@ import CloseBtn from "@components/CloseBtn";
 import Target from "@components/Target";
 import Applicants from "@components/Applicants";
 import { Context } from "@components/Task";
+import Status from "@components/Status";
 
 export default function Shifts({opened, shifts, handleClick, task, ...props}) {
     const {expectedTempState} = useContext(Context);
@@ -30,13 +31,18 @@ export default function Shifts({opened, shifts, handleClick, task, ...props}) {
         <div css={container(opened)} onClick={e => closeModal(e)}>     
             <div css={frame}>
                 <div css={scrollContainer}>
-                    <div css={menu}>
-                        <div>
-                            <h3 css={css`display: inline;`}>{task.company.name}</h3> - {task.details.jobType}
-                            <Target>{task.selection.target}</Target>
-                            <Applicants amount={task.details.applicants} expected={expectedTempState}/>
+                    <div css={menuSticky}>
+                        <div css={menuWrap}>
+                            <div>
+                                <h3 css={css`display: inline;`}>{task.company.name}</h3>
+                                <p>{task.details.jobType} : <Status>{task.selection.status}</Status></p>
+                            </div>
+                            <div>
+                                <Target>{task.selection.target}</Target>
+                                <Applicants amount={task.details.applicants} expected={expectedTempState}/>
+                            </div>
+                            <CloseBtn handler={handleClick} css={css`position: absolute; top: 0.5rem; right: 0.5rem;`}/>
                         </div>
-                        <CloseBtn handler={handleClick}/>
                     </div>
                     {upComingShifts.length != 0 && <ShiftsGrid shifts={upComingShifts}/>}
                     {upComingShifts.length != 0 && endedShifts.length != 0 && <hr></hr>}
@@ -82,19 +88,21 @@ const scrollContainer = css`
     overflow-y: scroll;
     background: white;
 `
-const menu = css`
+const menuSticky = css`
     position: sticky;
     top: 0;
     left: 0;
     background-color: var(--blueLight);
     z-index: 99;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+`
+const menuWrap = css`
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    padding-left: 4rem;
-    padding-right: 1rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    align-items: center;
 `
 
 const grid = css`
@@ -103,4 +111,8 @@ const grid = css`
     gap: 1rem;
     max-width: min(80vw, 1200px);
     padding: 2rem 4rem;
+    @media(max-width: 640px) {
+        max-width: none;
+        padding: 2rem 2rem;
+    }
 `
