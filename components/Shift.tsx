@@ -4,6 +4,8 @@ import { css } from "@emotion/react";
 import dayjs from "dayjs";
 
 export default function Shift ({shift, index, length, ...props}) {
+
+    // SHOULD REFACTO THIS -> Lift state up, handle state via TASK as an array
     const [setFailing, setShort, expectedTempWorker, expectedTempState, setExpectedTempState] = useContext(Context);
     const ended = dayjs() > dayjs(shift.end);
     const filled = (shift.slots == shift.filledSlots);
