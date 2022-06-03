@@ -43,7 +43,7 @@ const container = css`
   flex-direction: column;
   gap: 1rem;
   margin: 1rem;
-  max-width: 1000px;
+  max-width: 800px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1rem;
