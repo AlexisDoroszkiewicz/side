@@ -80,7 +80,7 @@ const frame = css`
 const scrollContainer = css`
     height: 70vh;
     @media(max-width: 640px) {
-        height: 95vh;
+        height: 100vh;
     }
     overflow-y: scroll;
     background: white;
