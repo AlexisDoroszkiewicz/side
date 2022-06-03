@@ -60,6 +60,7 @@ const Home: NextPage<{ tasks: object[] }> = ({ tasks }) => {
 					}}>
 					<Filters />
 					<div css={container}>
+						{/* need to add: if this has no child, show error message, useful for filters */}
 						{tasks.map((task: TaskProps) => {
 							return <Task key={task.id} task={task} />;
 						})}

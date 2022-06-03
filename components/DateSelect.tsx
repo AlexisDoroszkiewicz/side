@@ -11,6 +11,7 @@ export default function DateSelect(params) {
 			onChange={(date: Date) => setDate(date)}
 			dateFormat="dd/MM/yyyy"
 			isClearable
+			placeholderText="date"
 		/>
 	);
 }
