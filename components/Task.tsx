@@ -61,9 +61,9 @@ export default function Task({task, ...props}) {
                 </div>
                 <button css={button} onClick={handleClick} disabled={(!shifts)}>Shifts</button>
             </div>
-            <Context.Provider value={[setFailing, setShort, expectedTempWorker, expectedTempState, setExpectedTempState]}>
+            {/* <Context.Provider value={[setFailing, setShort, expectedTempWorker, expectedTempState, setExpectedTempState]}>
                 {shifts && <Shifts opened={opened} shifts={shifts} handleClick={handleClick} task={task}/>}
-            </Context.Provider>
+            </Context.Provider> */}
         </div>
     )
 };
