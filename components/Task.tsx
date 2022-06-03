@@ -28,6 +28,7 @@ export default function Task({task, ...props}) {
     // expected number of workers
     const [expected, setExpected] = useState(0);
 
+    // added a ready state to only render after states have been set, since layouteffect didnt do what i want
     const [ready, setReady] = useState(false);
     
     // using Layoutfx so this occurs prior to first render, and displays tasks in proper order right away
@@ -65,6 +66,7 @@ export default function Task({task, ...props}) {
                 state.short = true;
             }
 
+            arr.push(state);
             // add expected workers to counter
             counter += (shift.slots - shift.filledSlots);
         })
@@ -119,7 +121,7 @@ export default function Task({task, ...props}) {
                 {/* disable button if no shifts */}
                 <button css={button} onClick={handleClick} disabled={(!shifts)}>Shifts</button>
             </div>
-            {shifts && <Shifts opened={opened} shifts={shifts} handleClick={handleClick} task={task} expected={expected}/>} 
+            {shifts && <Shifts opened={opened} shifts={shifts} handleClick={handleClick} task={task} expected={expected} states={stateArr}/>} 
         </div>
     )
 };

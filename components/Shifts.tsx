@@ -7,14 +7,15 @@ import Target from "@components/Target";
 import Applicants from "@components/Applicants";
 import Status from "@components/Status";
 
-export default function Shifts({opened, shifts, handleClick, task, expected, ...props}) {
+export default function Shifts({opened, shifts, handleClick, task, expected, states, ...props}) {
     
     // split shifts into ended and upcoming so we can render different tabs
     // Should refacto -> use REACT PORTALS instead to move shifts in corresponding tab
     let upComingShifts = [];
     let endedShifts = [];
 
-    shifts.forEach((shift) => {
+    shifts.forEach((shift, i) => {
+        shift.state = states[i];
         if (dayjs() > dayjs(shift.end)) endedShifts.push(shift);
         else upComingShifts.push(shift);
     })
@@ -51,10 +52,9 @@ export default function Shifts({opened, shifts, handleClick, task, expected, ...
 };
 
 const ShiftsGrid = ({shifts, ...props}) => {
-    
     return (
         <div css={grid} {...props}>
-            {shifts.map((shift: { id: Key; }, i: number) => <Shift key={shift.id} index={i} length={shifts.length} shift={shift}/>)}
+            {shifts.map((shift: { id: Key; }, i: number) => <Shift key={shift.id} index={i} shift={shift}/>)}
         </div>
     )
 }
