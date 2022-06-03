@@ -1,5 +1,3 @@
 export default function Slider(params) {
-    return (
-        <div>This is slider</div>
-    )
-};
+	return <div>This is slider</div>;
+}
