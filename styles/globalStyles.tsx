@@ -10,6 +10,8 @@ export const globalStyles = (
                 --blue: #3681EE;
                 --blueLight: #EBF2FE;
                 --blueDark: #115fcf;
+                --skyBlue: #59A6F9;
+                --pink: #F498BC;
                 --green: #41C5C5;
 				--red: #F35D55;
                 --orange: #FF7C42;

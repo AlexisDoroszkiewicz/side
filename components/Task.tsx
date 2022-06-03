@@ -46,14 +46,13 @@ export default function Task({task, ...props}) {
                 <img src={company.pictureURL} width={"50"} height={"50"}/>
                 <div>
                     <h3>{company.name}</h3>
-                    <p>{details.jobType}</p>
+                    <p>{details.jobType} : <small css={status(selection.status)}>{selection.status}</small></p>
                 </div>
             </div>
             
             <div css={css`display: flex; justify-content: space-between; align-items: flex-end`}>
                 <div>
                     <p><span css={label}>Target : </span>{selection.target}</p>
-                    <p><span css={label}>Status : </span>{selection.status}</p>
                     <p><span css={label}>Applicants : </span><span css={css``}>{details.applicants}</span> / <span css={css`color: ${expectedTempState == 0 && 'var(--red)'};`}>{expectedTempState}</span> {details.applicants >= expectedTempState *3 && expectedTempState != 0 && "✅"}</p>
                 </div>
                 <button css={button} onClick={handleClick} disabled={(!shifts)}>Shifts</button>
@@ -81,7 +80,14 @@ const taskContainer = (failing: boolean, short: boolean, closable: boolean, expe
         border-radius: 3px;
     }
 `
-
+const status = (status: string) => css`
+    --color: ${status == 'ongoing' ? 'var(--pink)' : status == 'ready' ? 'var(--green)' : 'var(--grey)'};
+    color: var(--color);
+    border: 1px solid var(--color);
+    background-color: white;
+    padding: 0.25em 0.5em;
+    border-radius: 3px;
+`
 const label = css`color: var(--grey);`
 
 const button = css`
