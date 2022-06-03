@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect, useRef } from "react";
+import { useState, useLayoutEffect, useRef, useContext } from "react";
 import { css } from "@emotion/react";
 import dayjs from "dayjs";
 import Applicants from "@components/Applicants";
@@ -6,9 +6,13 @@ import ShiftsModal from "@components/ShiftsModal";
 import Status from "@components/Status"
 import Target from "@components/Target";
 import CloseBtn from "@components/CloseBtn";
+import { Context } from "pages";
 
 export default function Task({task, ...props}) {
     const {company, details, selection, shifts} = task;
+
+    const {selected, date, range} = useContext(Context);
+    const tag = task.selection.status
 
     // ref to target task 🎯
     const taskRef: {current: HTMLDivElement} = useRef();
@@ -92,7 +96,8 @@ export default function Task({task, ...props}) {
 
     // skip closed tasks ❌
     // has to be at the bottom since cant run hooks conditionally
-    if (selection.status == 'closed') return;
+    if (selected != 'closed' && selection.status == 'closed') return;
+    if (selected && selected != tag) return;
     if (ready == false) return;
 
     return (

@@ -4,6 +4,7 @@ import { css } from '@emotion/react';
 import data from "@public/tasks.json"
 import Task from '@components/Task';
 import Filters from '@components/Filters';
+import { createContext, useState } from 'react';
 
 // For real time updates will need to look into real time database and hooks
 export async function getServerSideProps() {
@@ -24,7 +25,18 @@ interface TaskProps {
   updatedAt?: string,
 }
 
+// should be setting types
+export interface ContextProps {
+  [key:string]: any,
+}
+ 
+export const Context = createContext<ContextProps>({});
+
 const Home: NextPage<{tasks:object[]}> = ({tasks}) => {
+  // global filters
+  const [selected, setSelected] = useState();
+  const [date, setDate] = useState();
+  const [range, setRange] = useState();
   
   return (
     <>
@@ -34,14 +46,16 @@ const Home: NextPage<{tasks:object[]}> = ({tasks}) => {
         <meta name="description" content="Tasks list app"></meta>
       </Head>
       <main css={main}>
-        <Filters/>
-        <div css={container}>
-          {tasks.map((task: TaskProps)  => {
-            return (
-              <Task key={task.id} task={task}/>
-            )
-          })}
-        </div>
+        <Context.Provider value={{selected, setSelected, date, setDate, range, setRange}}>
+          <Filters/> 
+          <div css={container}>
+            {tasks.map((task: TaskProps)  => {
+              return (
+                <Task key={task.id} task={task}/>
+              )
+            })}
+          </div>
+        </Context.Provider>
       </main>
     </>
     
