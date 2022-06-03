@@ -16,19 +16,23 @@ export default function Task({task, ...props}) {
     const [failing, setFailing] = useState(false); 
     const [short, setShort] = useState(false);
     const [closable, setClosable] = useState(false);
+    const [noUpcomingShift, setNoUpcomingShift] = useState(false);
 
     // counter for how many temp workers required for this mission, total of non-ended shifts unfilled slots
     // we use a ref to prevent unecessary rerender and only set state at the last shift
     const expectedTempWorker = useRef(0);
     const [expectedTempState, setExpectedTempState] = useState(0);
 
-    // if task has no shift, or all shifts are ended, or we have enough temp workers to fill ALL slots : set closable
+    // if task has no shift, or all shifts are ended, set noUpcomingShift
     useLayoutEffect(() => {
         if (!shifts ||
-            (shifts.every((shift: { end: string | number | Date | dayjs.Dayjs; }) => dayjs() > dayjs(shift.end))) ||
-            (expectedTempState && details.applicants >= (expectedTempState *3))) {
-                setClosable(true);
-            }
+            (shifts.every((shift: { end: string | number | Date | dayjs.Dayjs; }) => dayjs() > dayjs(shift.end)))) {
+                setNoUpcomingShift(true);
+        }
+    // if task has shifts, and has 3 times more applicant than total amount of available slots, set closable
+        else if (shifts && expectedTempState && details.applicants >= (expectedTempState *3)) {
+            setClosable(true);
+        }
     }, [expectedTempState])  
     // skip closed tasks ❌
     if (selection.status == 'closed') return;
