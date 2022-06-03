@@ -35,7 +35,7 @@ export default function Shifts({opened, shifts, handleClick, task, expected, sta
                                 <h3 css={css`display: inline;`}>{task.company.name}</h3>
                                 <p>{task.details.jobType} : <Status>{task.selection.status}</Status></p>
                             </div>
-                            <div>
+                            <div css={css`text-align: right;`}>
                                 <Applicants amount={task.details.applicants} expected={expected}/>
                                 <Target>{task.selection.target}</Target>
                             </div>
@@ -75,15 +75,16 @@ const frame = css`
     overflow: hidden;
     border: 1px solid var(--black);
     position: relative;
+    height: 70vh;
+    @media(max-width: 640px) {
+        height: -webkit-fill-available;
+    }
 `
 
 const scrollContainer = css`
-    height: 70vh;
-    @media(max-width: 640px) {
-        height: 100vh;
-    }
     overflow-y: scroll;
     background: white;
+    height: 100%;
 `
 const menuSticky = css`
     position: sticky;
