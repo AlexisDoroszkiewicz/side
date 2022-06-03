@@ -33,13 +33,16 @@ const Home: NextPage<{tasks:object[]}> = ({tasks}) => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta name="description" content="Tasks list app"></meta>
       </Head>
-      <div css={container}>
-        {tasks.map((task: TaskProps)  => {
-          return (
-            <Task key={task.id} task={task}/>
-          )
-        })}
-      </div>
+      <main css={main}>
+        <Filters/>
+        <div css={container}>
+          {tasks.map((task: TaskProps)  => {
+            return (
+              <Task key={task.id} task={task}/>
+            )
+          })}
+        </div>
+      </main>
     </>
     
   )
@@ -47,14 +50,16 @@ const Home: NextPage<{tasks:object[]}> = ({tasks}) => {
 
 export default Home
 
-const container = css`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin: 1rem;
+const main = css`
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1rem;
   padding-right: 1rem;
+`
+
+const container = css`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `
