@@ -61,9 +61,9 @@ export default function Task({task, ...props}) {
                 </div>
                 <button css={button} onClick={handleClick} disabled={(!shifts)}>Shifts</button>
             </div>
-            {/* <Context.Provider value={[setFailing, setShort, expectedTempWorker, expectedTempState, setExpectedTempState]}>
+            <Context.Provider value={[setFailing, setShort, expectedTempWorker, expectedTempState, setExpectedTempState]}>
                 {shifts && <Shifts opened={opened} shifts={shifts} handleClick={handleClick} task={task}/>}
-            </Context.Provider> */}
+            </Context.Provider>
         </div>
     )
 };
@@ -72,7 +72,7 @@ const taskContainer = (failing: boolean, short: boolean, closable: boolean, expe
     /* order tasks */
     order: ${failing ? '-3' : short ? '-2' : expectedTempState == 0 ? '2' : closable && '1'};
     border: 2px solid;
-    border-color: ${failing ? 'var(--red)' : short ? 'var(--yellow)' : closable && 'var(--green)'};
+    border-color: ${failing ? 'var(--red)' : short ? 'var(--yellow)' : closable ? 'var(--green)' : 'var(--greyLight)'};
     background-color: ${failing ? 'var(--redSubtle)' : short ? 'var(--yellowSubtle)' : closable && 'var(--greenSubtle)'};
     padding: 1rem; 
     border-radius: 3px;
