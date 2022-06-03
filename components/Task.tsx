@@ -1,8 +1,10 @@
-import Shifts from "@components/Shifts";
-import { css } from "@emotion/react";
 import { useState, createContext, useLayoutEffect, useRef } from "react";
+import { css } from "@emotion/react";
 import dayjs from "dayjs";
+import Applicants from "@components/Applicants";
+import Shifts from "@components/Shifts";
 import Status from "@components/Status"
+import Target from "@components/Target";
 
 // create context to avoid props drilling
 export const Context = createContext([]);
@@ -57,8 +59,8 @@ export default function Task({task, ...props}) {
             
             <div css={css`display: flex; justify-content: space-between; align-items: flex-end`}>
                 <div>
-                    <p><span css={label}>Target : </span>{selection.target}</p>
-                    <p><span css={label}>Applicants : </span><span css={css``}>{details.applicants}</span> / <span css={css`color: ${expectedTempState == 0 && 'var(--red)'};`}>{expectedTempState}</span> {details.applicants >= expectedTempState *3 && expectedTempState != 0 && "✅"}</p>
+                    <Target>{selection.target}</Target>
+                    <Applicants amount={details.applicants} expected={expectedTempState}/>
                 </div>
                 <button css={button} onClick={handleClick} disabled={(!shifts)}>Shifts</button>
             </div>
@@ -85,8 +87,6 @@ const taskContainer = (failing: boolean, short: boolean, closable: boolean, expe
         border-radius: 3px;
     }
 `
-
-const label = css`color: var(--grey);`
 
 const button = css`
     padding: .5em 1em;
