@@ -92,9 +92,6 @@ export default function Task({ task, ...props }) {
 
 					// check if shift start day match date filter
 					if (date && dayjs(date).isSame(dayjs(shift.start), "day")) {
-						console.log(
-							dayjs(date).isSame(dayjs(shift.start), "day")
-						);
 						dayCheck = true;
 					}
 

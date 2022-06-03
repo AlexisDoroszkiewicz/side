@@ -38,8 +38,6 @@ const Home: NextPage<{ tasks: object[] }> = ({ tasks }) => {
 	const [date, setDate] = useState();
 	const [range, setRange] = useState();
 
-	console.log(date);
-
 	return (
 		<>
 			<Head>
