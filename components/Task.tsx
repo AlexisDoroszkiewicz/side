@@ -70,7 +70,7 @@ export default function Task({task, ...props}) {
 
 const taskContainer = (failing: boolean, short: boolean, closable: boolean, expectedTempState: number) => css`
     /* order tasks */
-    order: ${failing ? '-3' : short ? '-2' : expectedTempState == 0 ? '2' : closable && '1'};
+    order: ${failing ? '-3' : short ? '-2' : closable ? '-1' : expectedTempState == 0 && '1'};
     border: 2px solid;
     border-color: ${failing ? 'var(--red)' : short ? 'var(--yellow)' : closable ? 'var(--green)' : 'var(--greyLight)'};
     background-color: ${failing ? 'var(--redSubtle)' : short ? 'var(--yellowSubtle)' : closable && 'var(--greenSubtle)'};
