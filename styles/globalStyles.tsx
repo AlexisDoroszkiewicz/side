@@ -60,6 +60,35 @@ export const globalStyles = (
 			.react-datepicker-wrapper {
 				width: auto;
 			}
+
+			.react-datepicker__input-container {
+				input {
+					padding-left: 1em;
+					align-items: center;
+					border-color: hsl(0, 0%, 80%);
+					border-radius: 4px;
+					border-style: solid;
+					border-width: 1px;
+					cursor: default;
+					display: flex;
+					flex-wrap: wrap;
+					justify-content: space-between;
+					min-height: 38px;
+					outline: 0 !important;
+					position: relative;
+					transition: all 100ms;
+					box-sizing: border-box;
+				}
+			}
+			.react-datepicker__day--keyboard-selected {
+				background-color: var(--blue);
+			}
+			.rc-slider-handle {
+				border-color: var(--blue);
+			}
+			.rc-slider-track {
+				background-color: var(--skyBlue);
+			}
 		`}
 	/>
 );

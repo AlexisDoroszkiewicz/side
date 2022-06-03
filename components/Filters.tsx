@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import RangePicker from "@components/RangePicker";
+import NumberSlider from "@components/NumberSlider";
 import DropDown from "@components/DropDown";
 import DateSlect from "@components/DateSelect";
 
@@ -17,7 +17,7 @@ export default function Filters() {
 			`}>
 			<DropDown />
 			<DateSlect />
-			<RangePicker />
+			<NumberSlider />
 		</div>
 	);
 }
