@@ -44,6 +44,7 @@ export default function Shift ({shift, index, length, ...props}) {
 
     return (
         <div css={shiftContainer(ended, localFailing, localShort, filled)} {...props}>
+            {/* Should refacto each of these into small components */}
             <small>
                 <p css={css`font-weight: 500;`}>{startDay == endDay ? startDay : `Du ${startDay} au ${endDay}`}</p>
                 <p>{startHour} <span css={css`color: var(--grey);`}>{`>`}</span> {endHour}</p>
