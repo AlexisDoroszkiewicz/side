@@ -6,6 +6,11 @@ import { Context } from "pages";
 export default function DateSelect(params) {
 	const { date, setDate } = useContext(Context);
 	return (
-		<DatePicker selected={date} onChange={(date: Date) => setDate(date)} />
+		<DatePicker
+			selected={date && date}
+			onChange={(date: Date) => setDate(date)}
+			dateFormat="dd/MM/yyyy"
+			isClearable
+		/>
 	);
 }

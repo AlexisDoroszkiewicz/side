@@ -5,7 +5,6 @@ import data from "@public/tasks.json";
 import Task from "@components/Task";
 import Filters from "@components/Filters";
 import { createContext, useState } from "react";
-import dayjs from "dayjs";
 
 // For real time updates will need to look into real time database and hooks
 export async function getServerSideProps() {
@@ -36,8 +35,10 @@ export const Context = createContext<ContextProps>({});
 const Home: NextPage<{ tasks: object[] }> = ({ tasks }) => {
 	// global filters
 	const [selected, setSelected] = useState();
-	const [date, setDate] = useState(dayjs());
+	const [date, setDate] = useState();
 	const [range, setRange] = useState();
+
+	console.log(date);
 
 	return (
 		<>

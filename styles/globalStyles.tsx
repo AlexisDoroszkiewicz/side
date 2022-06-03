@@ -56,6 +56,10 @@ export const globalStyles = (
 			::-webkit-scrollbar-thumb:hover {
 				background: var(--blueDark);
 			}
+
+			.react-datepicker-wrapper {
+				width: auto;
+			}
 		`}
 	/>
 );

@@ -11,6 +11,7 @@ import { Context } from "pages";
 export default function Task({ task, ...props }) {
 	const { company, details, selection, shifts } = task;
 
+	// context used for filters
 	const { selected, date, range } = useContext(Context);
 	const tag = task.selection.status;
 
@@ -24,10 +25,16 @@ export default function Task({ task, ...props }) {
 	const [stateArr, setStateArr] = useState([]);
 
 	// task level state
+	// has a shift that has start and slots left
 	const [failing, setFailing] = useState(false);
+	// has a shift starting in 24h or less and slots left
 	const [short, setShort] = useState(false);
+	// has no upcoming shifts, all ended
 	const [noUpcomingShift, setNoUpcomingShift] = useState(true);
+	// has x3 more applicants than expected workers
 	const [closable, setClosable] = useState(false);
+	// has a shift matching filtered day
+	const [dayMatch, setDayMatch] = useState(false);
 
 	// expected number of workers
 	const [expected, setExpected] = useState(0);
@@ -43,6 +50,7 @@ export default function Task({ task, ...props }) {
 		if (task.shifts) {
 			let arr = [];
 			let counter = 0;
+			let dayCheck = false;
 
 			task.shifts.forEach(
 				(shift: {
@@ -82,6 +90,14 @@ export default function Task({ task, ...props }) {
 						state.short = true;
 					}
 
+					// check if shift start day match date filter
+					if (date && dayjs(date).isSame(dayjs(shift.start), "day")) {
+						console.log(
+							dayjs(date).isSame(dayjs(shift.start), "day")
+						);
+						dayCheck = true;
+					}
+
 					arr.push(state);
 					// add expected workers to counter
 					counter += shift.slots - shift.filledSlots;
@@ -92,9 +108,10 @@ export default function Task({ task, ...props }) {
 			setClosable(counter != 0 && task.details.applicants >= counter * 3);
 			setExpected(counter);
 			setStateArr(arr);
+			setDayMatch(dayCheck);
 			setReady(true);
 		}
-	}, []);
+	}, [date]);
 
 	const handleClick = () => {
 		setOpened(!opened);
@@ -113,6 +130,7 @@ export default function Task({ task, ...props }) {
 	if (selected != "closed" && selection.status == "closed") return;
 	// filter logic
 	if (selected && selected != tag) return;
+	if (date && dayMatch == false) return;
 	if (ready == false) return;
 
 	return (

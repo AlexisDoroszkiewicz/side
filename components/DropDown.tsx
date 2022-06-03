@@ -15,10 +15,16 @@ export default function DropDown() {
 	return (
 		<Select
 			options={options}
-			defaultValue={selected}
+			placeholder="tag"
 			onChange={(e) => setSelected(e?.value)}
 			instanceId={"tagFilter"}
 			isClearable={true}
+			styles={{
+				container: (provided) => ({
+					...provided,
+					width: "10rem",
+				}),
+			}}
 		/>
 	);
 }
