@@ -23,13 +23,16 @@ export default function Task({task, ...props}) {
     const [failing, setFailing] = useState(false);
     const [short, setShort] = useState(false);
     const [noUpcomingShift, setNoUpcomingShift] = useState(true);
-    const [closable, setClosable] = useState(false); 
+    const [closable, setClosable] = useState(false);
 
     // expected number of workers
     const [expected, setExpected] = useState(0);
+
+    const [ready, setReady] = useState(false);
     
     // using Layoutfx so this occurs prior to first render, and displays tasks in proper order right away
     // else they move around after page loaded and it doesnt look good
+    // for some reason this only works in dev env not on the deployed version 🤷‍♂️
     useLayoutEffect(() => {
     // for each shift, create an object of state properties and count expected workers
     if (task.shifts) {
@@ -70,6 +73,7 @@ export default function Task({task, ...props}) {
         setClosable(counter != 0 && task.details.applicants >= counter * 3)
         setExpected(counter);
         setStateArr(arr);
+        setReady(true);
     }
     }, [])
 
@@ -87,6 +91,7 @@ export default function Task({task, ...props}) {
     // skip closed tasks ❌
     // has to be at the bottom since cant run hooks conditionally
     if (selection.status == 'closed') return;
+    if (ready == false) return;
 
     return (
         <div ref={taskRef} css={taskContainer(failing, short, closable, expected, noUpcomingShift)} {...props}>
