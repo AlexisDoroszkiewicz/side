@@ -1,6 +1,6 @@
 import Shifts from "@components/Shifts";
 import { css } from "@emotion/react";
-import { useState, createContext, useEffect, useRef } from "react";
+import { useState, createContext, useLayoutEffect, useRef } from "react";
 import dayjs from "dayjs";
 
 // create context to avoid props drilling
@@ -23,7 +23,7 @@ export default function Task({task, ...props}) {
     const [expectedTempState, setExpectedTempState] = useState(0);
 
     // if task has no shift, or all shifts are ended, or we have enough temp workers to fill ALL slots : set closable
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (!shifts ||
             (shifts.every((shift: { end: string | number | Date | dayjs.Dayjs; }) => dayjs() > dayjs(shift.end))) ||
             (expectedTempState && details.applicants >= (expectedTempState *3))) {

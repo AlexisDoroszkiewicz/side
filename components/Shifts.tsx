@@ -1,6 +1,6 @@
 import dayjs from "dayjs"
 import { css } from "@emotion/react";
-import { Key, useContext, useEffect, useState } from "react";
+import { Key, useContext, useLayoutEffect, useState } from "react";
 import { Context } from "./Task";
 
 export default function Shifts({opened, shifts, handleClick, task, ...props}) {
@@ -107,7 +107,7 @@ const Shift = ({shift, index, length, ...props}) => {
     const [localShort, setLocalShort] = useState(false);
     const [localClosable, setLocalClosable] = useState(false);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         // if not ended, update temp worker count
         if (!ended) expectedTempWorker.current += (shift.slots - shift.filledSlots);
         // if shift began, is not ended, and slots not filled set failing to true
