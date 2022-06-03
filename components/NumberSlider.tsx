@@ -36,7 +36,7 @@ export default function NumberSlider() {
 				defaultValue={[0, 80]}
 				allowCross={false}
 				marks={marks}
-				onAfterChange={(e) => setMinWorker(e)}
+				onChange={(e) => setMinWorker(e)}
 			/>
 		</div>
 	);
