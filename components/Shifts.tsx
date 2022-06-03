@@ -15,8 +15,13 @@ export default function Shifts({opened, shifts, handleClick, task, ...props}) {
         else upComingShifts.push(shift);
     })
 
+    // close modal if clicking on overlay background
+    const closeModal = (e) => {
+        if (e.target == e.currentTarget) handleClick();
+    }
+
     return (
-        <div css={container(opened)}>     
+        <div css={container(opened)} onClick={e => closeModal(e)}>     
             <div css={frame}>
                 <div css={scrollContainer}>
                     <div css={menu}>
