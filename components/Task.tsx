@@ -5,12 +5,16 @@ import Applicants from "@components/Applicants";
 import Shifts from "@components/Shifts";
 import Status from "@components/Status"
 import Target from "@components/Target";
+import CloseBtn from "@components/CloseBtn";
 
 // create context to avoid props drilling
 export const Context = createContext([]);
 
 export default function Task({task, ...props}) {
     const {company, details, selection, shifts} = task;
+
+    // ref to target task
+    const taskRef: {current: HTMLDivElement} = useRef();
 
     // state to display shifts modal
     const [opened, setOpened] = useState(false);
@@ -46,15 +50,27 @@ export default function Task({task, ...props}) {
         else document.body.style.overflow = "hidden";
     }
 
+    const closeTask = () => {
+        // HERE -> API CALL TO SET TASK STATUS TO "CLOSED";
+        taskRef.current.style.display = "none";
+    }
+
     return (
-        <div css={taskContainer(failing, short, closable, expectedTempState, noUpcomingShift)} {...props}>
-            <div css={css`display: flex; align-items: center; gap: 1rem; margin-bottom: 2em;`}>
-                {/* Should be using next Image component but had issues with AWS S3 domain config 🤷‍♂️ */}
-                <img src={company.pictureURL} width={"50"} height={"50"}/>
-                <div>
-                    <h3>{company.name}</h3>
-                    <p>{details.jobType} : <Status>{selection.status}</Status></p>
+        <div ref={taskRef} css={taskContainer(failing, short, closable, expectedTempState, noUpcomingShift)} {...props}>
+            <div>
+                <div css={css`display: flex; justify-content: space-between; align-items: flex-start`}>
+                    <div css={css`display: flex; align-items: center; gap: 1rem; margin-bottom: 2em;`}>
+                        {/* Should be using next Image component but had issues with AWS S3 domain config 🤷‍♂️ */}
+                        <img src={company.pictureURL} width={"50"} height={"50"}/>
+                        <div>
+                            <h3>{company.name}</h3>
+                            <p>{details.jobType} : <Status>{selection.status}</Status></p>
+                        </div>
+                    </div>
+                    {/* If expectedTempState == 0 (either no upcoming shift or all slots filled), then show close btn */}
+                    {expectedTempState == 0 && <CloseBtn handler={closeTask}/>}
                 </div>
+
             </div>
             
             <div css={css`display: flex; justify-content: space-between; align-items: flex-end`}>
