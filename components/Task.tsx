@@ -52,17 +52,17 @@ export default function Task({task, ...props}) {
 
             // if we get here, means task has at least 1 shift that hasnt ended, set noUpcomingShift to false
             // so it's only true if all shifts are ended
-            setNoUpcomingShift(false);
+            if (noUpcomingShift == true) setNoUpcomingShift(false);
 
             // if shift started and filled < slots set failing
             if ((dayjs() > dayjs(shift.start)) && (shift.filledSlots < shift.slots)) {
-                setFailing(true);
+                if (failing == false) setFailing(true);
                 state.failing = true;
             }
 
             // if shift starts in 24h or less and is lacking workers set short notice
             else if ((dayjs(shift.start).diff(dayjs(), 'hour') < 24 &&  dayjs(shift.start).diff(dayjs(), 'hour') > 0)) {
-                setShort(true);
+                if (short == false) setShort(true);
                 state.short = true;
             }
 
