@@ -11,9 +11,6 @@ export default function NumberSlider() {
 		0: 0,
 		20: 20,
 		40: 40,
-		60: 60,
-		80: 80,
-		100: 100,
 	};
 	return (
 		<div
@@ -33,7 +30,7 @@ export default function NumberSlider() {
 				Minimum amount of workers required
 			</small>
 			<Slider
-				defaultValue={[0, 80]}
+				max={40}
 				allowCross={false}
 				marks={marks}
 				onChange={(e) => setMinWorker(e)}

@@ -89,6 +89,12 @@ export const globalStyles = (
 			.rc-slider-track {
 				background-color: var(--blue);
 			}
+			.rc-slider-mark-text {
+				color: var(--black);
+			}
+			.rc-slider-rail {
+				background-color: #d4d4d4;
+			}
 		`}
 	/>
 );
