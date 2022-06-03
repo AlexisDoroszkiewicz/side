@@ -14,7 +14,7 @@ export default function Shifts({opened, shifts, handleClick, task, ...props}) {
     })
 
     return (
-        <div css={css`display: none; ${container(opened)}` }>     
+        <div css={container(opened)}>     
             <div css={frame}>
                 <div css={scrollContainer}>
                     <div css={menu}>
@@ -41,6 +41,7 @@ const ShiftsGrid = ({shifts, ...props}) => {
 }
 
 const container = (opened: boolean) => css`
+    display: none;
     display: ${opened && 'grid'};
     place-items: center;
     position: fixed;
