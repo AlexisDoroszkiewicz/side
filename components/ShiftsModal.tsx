@@ -53,6 +53,9 @@ export default function Shifts({
 							<div
 								css={css`
 									text-align: right;
+									@media (max-width: 640px) {
+										display: none;
+									}
 								`}>
 								<Applicants
 									amount={task.details.applicants}
@@ -132,6 +135,10 @@ const menuSticky = css`
 	z-index: 99;
 	padding-left: 4rem;
 	padding-right: 4rem;
+	@media (max-width: 640px) {
+		padding-left: 2rem;
+		padding-right: 2rem;
+	}
 	padding-top: 0.75rem;
 	padding-bottom: 0.75rem;
 `;
