@@ -11,6 +11,7 @@ export default function Date({start, end, ...props}) {
 
     useEffect(()=>{
         // set dates inside useeffect because server timezone is different and creates server/client rendering differences
+        // maybe use timezone arg if this goes worlwide?
         setStartDay(dayjs(start).format('DD/MM/YYYY'));
         setEndDay(dayjs(end).format('DD/MM/YYYY'));
 

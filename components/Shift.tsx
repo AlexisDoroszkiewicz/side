@@ -13,7 +13,6 @@ export default function Shift ({shift, index, length, ...props}) {
     const filled = (shift.slots == shift.filledSlots);
     const [localFailing, setLocalFailing] = useState(false);
     const [localShort, setLocalShort] = useState(false);
-    const [localClosable, setLocalClosable] = useState(false);
 
     useEffect(() => {
         // if not ended, update temp worker count

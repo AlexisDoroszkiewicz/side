@@ -13,7 +13,7 @@ export const Context = createContext([]);
 export default function Task({task, ...props}) {
     const {company, details, selection, shifts} = task;
 
-    // ref to target task
+    // ref to target task 🎯
     const taskRef: {current: HTMLDivElement} = useRef();
 
     // state to display shifts modal
@@ -51,7 +51,7 @@ export default function Task({task, ...props}) {
     }
 
     const closeTask = () => {
-        // HERE -> API CALL TO SET TASK STATUS TO "CLOSED";
+        // HERE -> API CALL TO SET TASK STATUS TO "CLOSED" 📞;
         taskRef.current.style.display = "none";
     }
 
@@ -67,7 +67,7 @@ export default function Task({task, ...props}) {
                             <p>{details.jobType} : <Status>{selection.status}</Status></p>
                         </div>
                     </div>
-                    {/* If expectedTempState == 0 (either no upcoming shift or all slots filled), then show close btn */}
+                    {/* If expectedTempState == 0 (either no upcoming shift or all slots filled), then show close btn ❌*/}
                     {expectedTempState == 0 && <CloseBtn handler={closeTask}/>}
                 </div>
 
