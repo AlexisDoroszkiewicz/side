@@ -101,7 +101,7 @@ export default function Task({task, ...props}) {
                 <div css={css`display: flex; justify-content: space-between; align-items: flex-start`}>
                     <div css={css`display: flex; align-items: center; gap: 1rem; margin-bottom: 2em;`}>
                         {/* Should be using next Image component but had issues with AWS S3 domain config 🤷‍♂️ */}
-                        <img src={company.pictureURL} width={"50"} height={"50"}/>
+                        <img src={company.pictureURL} alt="company logo" width={"50"} height={"50"}/>
                         <div>
                             <h3>{company.name}</h3>
                             <p>{details.jobType} : <Status>{selection.status}</Status></p>

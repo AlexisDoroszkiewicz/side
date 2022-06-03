@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import data from "@public/tasks.json"
 import Task from '@components/Task';
 import { css } from '@emotion/react';
+import Head from 'next/head';
 
 // For real time updates will need to look into real time database and hooks
 export async function getServerSideProps() {
@@ -25,13 +26,19 @@ interface TaskProps {
 const Home: NextPage<{tasks:object[]}> = ({tasks}) => {
   
   return (
-    <div css={container}>
-      {tasks.map((task: TaskProps)  => {
-        return (
-          <Task key={task.id} task={task}/>
-        )
-      })}
-    </div>
+    <>
+      <Head>
+        <title>Tasks list</title>
+      </Head>
+      <div css={container}>
+        {tasks.map((task: TaskProps)  => {
+          return (
+            <Task key={task.id} task={task}/>
+          )
+        })}
+      </div>
+    </>
+    
   )
 }
 
