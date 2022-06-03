@@ -29,7 +29,8 @@ const Home: NextPage<{tasks:object[]}> = ({tasks}) => {
     <>
       <Head>
         <title>Tasks list</title>
-        <meta name="description">An app to view a list of tasks</meta>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta name="description" content="Tasks list app"></meta>
       </Head>
       <div css={container}>
         {tasks.map((task: TaskProps)  => {
