@@ -4,7 +4,6 @@ import Date from "@components/Date"
 
 export default function Shift ({shift, index, ...props}) {
 
-    console.log(shift.state)
     const ended = shift.state.ended;
     const failing = shift.state.failing;
     const short = shift.state.short;
