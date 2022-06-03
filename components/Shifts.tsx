@@ -65,6 +65,7 @@ const container = (opened: boolean) => css`
     right: 0;
     bottom: 0;
     background-color: #00000080;
+    z-index: 2;
 `
 const frame = css`
     border-radius: 10px;
