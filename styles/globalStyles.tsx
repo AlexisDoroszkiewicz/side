@@ -20,13 +20,13 @@ export const globalStyles = (
                 --orangeLight: hsla(18, 100%, 63%, .4);
                 --yellowLight: hsla(46, 100%, 50%, .4);
                 --greenLight: hsla(180, 53%, 51%, .4);
-                --redSubtle: hsla(3, 87%, 64%, .05);
+                --redSubtle: hsla(3, 87%, 64%, .1);
                 --orangeSubtle: hsla(18, 100%, 63%, .05);
                 --yellowSubtle: hsla(46, 100%, 50%, .05);
                 --greenSubtle: hsla(180, 53%, 51%, .1);
                 --grey: #5B616E;
                 --greyLight: #ADB2BD;
-                --greySubtle: hsla(221, 11%, 7%, .02);
+                --greySubtle: hsla(221, 11%, 7%, .01);
 			}
 
             html {

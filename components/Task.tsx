@@ -81,6 +81,7 @@ export default function Task({task, ...props}) {
                     <Target>{selection.target}</Target>
                     <Applicants amount={details.applicants} expected={expectedTempState}/>
                 </div>
+                {/* disable button if no shifts */}
                 <button css={button} onClick={handleClick} disabled={(!shifts)}>Shifts</button>
             </div>
             <Context.Provider value={{setFailing, setShort, expectedTempWorker, expectedTempState, setExpectedTempState}}>
