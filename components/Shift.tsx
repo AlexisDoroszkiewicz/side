@@ -1,10 +1,32 @@
-import { useLayoutEffect, useState } from "react";
+import { Key, useContext, useLayoutEffect, useState } from "react";
+import { Context } from "./Task";
 import { css } from "@emotion/react";
 import dayjs from "dayjs";
 
 export default function Shift ({shift, index, length, ...props}) {
+    const [setFailing, setShort, expectedTempWorker, expectedTempState, setExpectedTempState] = useContext(Context);
     const ended = dayjs() > dayjs(shift.end);
     const filled = (shift.slots == shift.filledSlots);
+    const [localFailing, setLocalFailing] = useState(false);
+    const [localShort, setLocalShort] = useState(false);
+    const [localClosable, setLocalClosable] = useState(false);
+
+    useLayoutEffect(() => {
+        // if not ended, update temp worker count
+        if (!ended) expectedTempWorker.current += (shift.slots - shift.filledSlots);
+        // if shift began, is not ended, and slots not filled set failing to true
+        if (!ended && (dayjs() > dayjs(shift.start)) && (shift.filledSlots < shift.slots)) {
+            setFailing(true);
+            setLocalFailing(true);
+        }
+        // else if shift begins within 24h, set short to true
+        else if (dayjs(shift.start).diff(dayjs(), 'hour') < 24 &&  dayjs(shift.start).diff(dayjs(), 'hour') > 0) {
+            setShort(true);
+            setLocalShort(true);
+        }
+        // if at the last shift and expectedState unset, update state for count; counts double in development due to react18 behaviour, counting properly on the deployed version
+        if (index == length -1 && expectedTempState == 0) setExpectedTempState(expectedTempWorker.current);
+    }, [])
 
     const startDay = dayjs(shift.start).format('DD/MM/YYYY');
     const endDay = dayjs(shift.end).format('DD/MM/YYYY');
@@ -13,7 +35,7 @@ export default function Shift ({shift, index, length, ...props}) {
     const endHour = dayjs(shift.end).format('HH:mm');
 
     return (
-        <div css={shiftContainer(ended, filled)} {...props}>
+        <div css={shiftContainer(ended, localFailing, localShort, filled)} {...props}>
             <small>
                 <p css={css`font-weight: 500;`}>{startDay == endDay ? startDay : `Du ${startDay} au ${endDay}`}</p>
                 <p>{startHour} <span css={css`color: var(--grey);`}>{`>`}</span> {endHour}</p>
@@ -27,8 +49,9 @@ export default function Shift ({shift, index, length, ...props}) {
     )
 }
 
-const shiftContainer = (ended: boolean, filled: boolean) =>css`
+const shiftContainer = (ended: boolean, localFailing:boolean, localShort:boolean, filled: boolean) =>css`
     opacity: ${ended && 0.4};
+    background-color: ${filled ? "var(--greenLight)" :localFailing ? "var(--redLight)" : localShort && "var(--yellowLight)"};
     border: 1px solid black;
     padding: 1em;
     border-radius: 3px;

@@ -1,7 +1,10 @@
 import Shifts from "@components/Shifts";
 import { css } from "@emotion/react";
-import { useState, useLayoutEffect, useRef } from "react";
+import { useState, createContext, useLayoutEffect, useRef } from "react";
 import dayjs from "dayjs";
+
+// create context to avoid props drilling
+export const Context = createContext([]);
 
 export default function Task({task, ...props}) {
     const {company, details, selection, shifts} = task;
@@ -58,9 +61,9 @@ export default function Task({task, ...props}) {
                 </div>
                 <button css={button} onClick={handleClick} disabled={(!shifts)}>Shifts</button>
             </div>
-            
-            {shifts && <Shifts opened={opened} shifts={shifts} handleClick={handleClick} task={task}/>}
-            
+            <Context.Provider value={[setFailing, setShort, expectedTempWorker, expectedTempState, setExpectedTempState]}>
+                {shifts && <Shifts opened={opened} shifts={shifts} handleClick={handleClick} task={task}/>}
+            </Context.Provider>
         </div>
     )
 };
