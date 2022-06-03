@@ -35,7 +35,7 @@ export const Context = createContext<ContextProps>({});
 const Home: NextPage<{ tasks: object[] }> = ({ tasks }) => {
 	// global filters
 	const [selected, setSelected] = useState<String>();
-	const [date, setDate] = useState<Date>();
+	const [date, setDate] = useState<any>({});
 	const [minWorker, setMinWorker] = useState<Number>();
 
 	return (

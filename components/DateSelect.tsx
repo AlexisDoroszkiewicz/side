@@ -1,18 +1,30 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Context } from "pages";
-import { css } from "@emotion/react";
 
 export default function DateSelect() {
 	const { date, setDate } = useContext(Context);
+
+	const [startDate, setStartDate] = useState(null);
+	const [endDate, setEndDate] = useState(null);
+	const onChange = (dates) => {
+		const [start, end] = dates;
+		setStartDate(start);
+		setEndDate(end);
+		setDate({ start, end });
+	};
 	return (
 		<DatePicker
-			selected={date && date}
-			onChange={(date: Date) => setDate(date)}
-			dateFormat="dd/MM/yyyy"
+			selected={startDate}
+			onChange={onChange}
+			startDate={startDate}
+			endDate={endDate}
+			selectsRange
+			selectsDisabledDaysInRange
+			placeholderText={"date"}
+			dateFormat={"dd/MM"}
 			isClearable
-			placeholderText="date"
 		/>
 	);
 }

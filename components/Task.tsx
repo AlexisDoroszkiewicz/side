@@ -7,6 +7,8 @@ import Status from "@components/Status";
 import Target from "@components/Target";
 import CloseBtn from "@components/CloseBtn";
 import { Context } from "pages";
+import isBetween from "dayjs/plugin/isBetween";
+dayjs.extend(isBetween);
 
 export default function Task({ task, ...props }) {
 	const { company, details, selection, shifts } = task;
@@ -89,9 +91,17 @@ export default function Task({ task, ...props }) {
 						if (short == false) setShort(true);
 						state.short = true;
 					}
-
-					// check if shift start day match date filter
-					if (date && dayjs(date).isSame(dayjs(shift.start), "day")) {
+					// check if shift start day is between date.start and date.end
+					if (
+						!date.start ||
+						!date.end ||
+						dayjs(shift.start).isBetween(
+							date.start,
+							date.end,
+							"day",
+							"[]"
+						)
+					) {
 						dayCheck = true;
 					}
 
