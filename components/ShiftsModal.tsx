@@ -119,6 +119,7 @@ const frame = css`
 	height: 70vh;
 	@media (max-width: 640px) {
 		height: -webkit-fill-available;
+		width: 100%;
 	}
 `;
 
