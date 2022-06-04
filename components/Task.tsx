@@ -37,12 +37,12 @@ export default function Task({ task, ...props }) {
 	const [closable, setClosable] = useState(false);
 	// has a shift matching filtered day
 	const [dayMatch, setDayMatch] = useState(false);
-
 	// expected number of workers
 	const [expected, setExpected] = useState(0);
-
 	// added a ready state to only render after states have been set, since layouteffect didnt do what i want
 	const [ready, setReady] = useState(false);
+	// closed status
+	const [closed, setClosed] = useState(task.selection.status == "closed");
 
 	// using Layoutfx so this occurs prior to first render, and displays tasks in proper order right away
 	// else they move around after page loaded and it doesnt look good
@@ -129,12 +129,13 @@ export default function Task({ task, ...props }) {
 
 	const closeTask = () => {
 		// HERE -> API CALL TO SET TASK STATUS TO "CLOSED" 📞;
+		setClosed(true);
 		taskRef.current.style.display = "none";
 	};
 
 	// skip closed tasks ❌
 	// has to be at the bottom since cant run hooks conditionally
-	if (selected != "closed" && selection.status == "closed") return;
+	if (selected != "closed" && closed) return;
 	// filter logic
 	if (
 		(selected && selected != tag) ||
@@ -186,7 +187,9 @@ export default function Task({ task, ...props }) {
 						</div>
 					</div>
 					{/* If expected == 0 (either no upcoming shift or all slots filled), then show close btn ❌*/}
-					{expected == 0 && <CloseBtn handler={closeTask} />}
+					{expected == 0 && closed == false && (
+						<CloseBtn handler={closeTask} />
+					)}
 				</div>
 			</div>
 
