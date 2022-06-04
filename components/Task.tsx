@@ -186,7 +186,7 @@ export default function Task({ task, ...props }) {
 						</div>
 					</div>
 					{/* If expected == 0 (either no upcoming shift or all slots filled), then show close btn ❌*/}
-					{expected == 0 && closed == false && (
+					{expected == 0 && status != "closed" && (
 						<CloseBtn handler={closeTask} />
 					)}
 				</div>
