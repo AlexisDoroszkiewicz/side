@@ -30,8 +30,10 @@ export const globalStyles = (
 			}
 
 			html {
-				font-family: "Roboto", sans-serif;
-				font-color: var(--black);
+				font-family: "Roboto", -apple-system, BlinkMacSystemFont,
+					Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
+					Droid Sans, Helvetica Neue, sans-serif;
+				color: var(--black);
 			}
 
 			img {
