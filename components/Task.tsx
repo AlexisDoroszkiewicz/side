@@ -48,11 +48,11 @@ export default function Task({ task, ...props }) {
 	// else they move around after page loaded and it doesnt look good
 	// for some reason this only works in dev env not on the deployed version 🤷‍♂️
 	useLayoutEffect(() => {
+		let dayCheck = false;
 		// for each shift, create an object of state properties and count expected workers
 		if (task.shifts) {
 			let arr = [];
 			let counter = 0;
-			let dayCheck = false;
 
 			task.shifts.forEach(
 				(shift: {
@@ -138,7 +138,7 @@ export default function Task({ task, ...props }) {
 	// filter logic
 	if (
 		(selected && selected != tag) ||
-		(date && dayMatch == false) ||
+		(date.start && date.end && dayMatch == false) ||
 		expected < minWorker ||
 		ready == false
 	) {

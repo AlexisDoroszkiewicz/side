@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { css } from "@emotion/react";
 
 export default function NumberSlider() {
-	const { setMinWorker } = useContext(Context);
+	const { minWorker, setMinWorker } = useContext(Context);
 
 	const marks = {
 		0: 0,
@@ -27,7 +27,7 @@ export default function NumberSlider() {
 					display: block;
 					font-size: 12px;
 				`}>
-				Minimum amount of workers required
+				Minimum amount of workers required: {minWorker}
 			</small>
 			<Slider
 				max={40}
