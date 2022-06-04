@@ -41,8 +41,8 @@ export default function Task({ task, ...props }) {
 	const [expected, setExpected] = useState(0);
 	// added a ready state to only render after states have been set, since layouteffect didnt do what i want
 	const [ready, setReady] = useState(false);
-	// closed status
-	const [closed, setClosed] = useState(task.selection.status == "closed");
+	// task status
+	const [status, setStatus] = useState(task.selection.status);
 
 	// using Layoutfx so this occurs prior to first render, and displays tasks in proper order right away
 	// else they move around after page loaded and it doesnt look good
@@ -130,13 +130,12 @@ export default function Task({ task, ...props }) {
 
 	const closeTask = () => {
 		// HERE -> API CALL TO SET TASK STATUS TO "CLOSED" 📞;
-		setClosed(true);
-		taskRef.current.style.display = "none";
+		setStatus("closed");
 	};
 
 	// skip closed tasks ❌
 	// has to be at the bottom since cant run hooks conditionally
-	if (selected != "closed" && closed) return;
+	if (selected != "closed" && status == "closed") return;
 	// filter logic
 	if (
 		(selected && selected != tag) ||
@@ -182,8 +181,7 @@ export default function Task({ task, ...props }) {
 						<div>
 							<h3>{company.name}</h3>
 							<p>
-								{details.jobType} :{" "}
-								<Status>{selection.status}</Status>
+								{details.jobType} : <Status>{status}</Status>
 							</p>
 						</div>
 					</div>
