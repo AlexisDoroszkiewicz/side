@@ -86,7 +86,8 @@ export default function Task({ task, ...props }) {
 					// if shift starts in 24h or less and is lacking workers set short notice
 					else if (
 						dayjs(shift.start).diff(dayjs(), "hour") < 24 &&
-						dayjs(shift.start).diff(dayjs(), "hour") > 0
+						dayjs(shift.start).diff(dayjs(), "hour") > 0 &&
+						shift.filledSlots < shift.slots
 					) {
 						if (short == false) setShort(true);
 						state.short = true;
