@@ -15,7 +15,6 @@ export default function Task({ task, ...props }) {
 
 	// context used for filters
 	const { selected, date, minWorker } = useContext(Context);
-	const tag = task.selection.status;
 
 	// ref to target task 🎯
 	const taskRef: { current: HTMLDivElement } = useRef();
@@ -138,7 +137,7 @@ export default function Task({ task, ...props }) {
 	if (selected != "closed" && status == "closed") return;
 	// filter logic
 	if (
-		(selected && selected != tag) ||
+		(selected && selected != status) ||
 		(date.start && date.end && dayMatch == false) ||
 		expected < minWorker ||
 		ready == false
