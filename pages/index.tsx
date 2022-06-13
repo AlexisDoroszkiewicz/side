@@ -55,7 +55,7 @@ const Home: NextPage<{ tasks: object[] }> = ({ tasks }) => {
 		start?: string | number | Date | dayjs.Dayjs;
 		end?: string | number | Date | dayjs.Dayjs;
 	}>({});
-	const [minWorker, setMinWorker] = useState<Number>();
+	const [minWorker, setMinWorker] = useState<Number>(0);
 
 	return (
 		<>
