@@ -27,7 +27,7 @@ export default function NumberSlider() {
 					display: block;
 					font-size: 12px;
 				`}>
-				Minimum amount of workers required: {minWorker}
+				<>Minimum amount of workers required: {minWorker}</>
 			</small>
 			<Slider
 				max={40}
