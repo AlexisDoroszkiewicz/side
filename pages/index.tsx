@@ -28,10 +28,25 @@ interface TaskProps {
 
 // should be setting types
 export interface ContextProps {
-	[key: string]: any;
+	selected?: String;
+	setSelected?: Function;
+	date?: {
+		start?: string | number | Date | dayjs.Dayjs;
+		end?: string | number | Date | dayjs.Dayjs;
+	};
+	setDate?: Function;
+	minWorker?: Number;
+	setMinWorker?: Function;
 }
 
-export const Context = createContext<ContextProps>({});
+export const Context = createContext<ContextProps>({
+	selected: "",
+	setSelected: () => {},
+	date: { start: 0, end: 0 },
+	setDate: () => {},
+	minWorker: 0,
+	setMinWorker: () => {},
+});
 
 const Home: NextPage<{ tasks: object[] }> = ({ tasks }) => {
 	// global filters
