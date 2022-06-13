@@ -15,16 +15,18 @@ export default function DateSelect() {
 		setDate({ start, end });
 	};
 	return (
-		<DatePicker
-			selected={startDate}
-			onChange={onChange}
-			startDate={startDate}
-			endDate={endDate}
-			selectsRange
-			selectsDisabledDaysInRange
-			placeholderText={"date"}
-			dateFormat={"dd/MM"}
-			isClearable
-		/>
+		<div>
+			<DatePicker
+				selected={startDate}
+				onChange={onChange}
+				startDate={startDate}
+				endDate={endDate}
+				selectsRange
+				selectsDisabledDaysInRange
+				placeholderText={"date"}
+				dateFormat={"dd/MM"}
+				isClearable
+			/>
+		</div>
 	);
 }

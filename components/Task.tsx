@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useState, useLayoutEffect, useRef, useContext } from "react";
 import { css } from "@emotion/react";
 import dayjs from "dayjs";
@@ -7,8 +8,11 @@ import Status from "@components/Status";
 import Target from "@components/Target";
 import CloseBtn from "@components/CloseBtn";
 import { Context } from "pages";
-import isBetween from "dayjs/plugin/isBetween";
-dayjs.extend(isBetween);
+import isShortNotice from "@lib/isShortNotice";
+import isLackingWorkers from "@lib/isLackingWorkers";
+import isStarted from "@lib/isStarted";
+import isEnded from "@lib/isEnded";
+import isBetweenDates from "@lib/isBetweenDates";
 
 export default function Task({ task, ...props }) {
 	const { company, details, selection, shifts } = task;
@@ -63,7 +67,7 @@ export default function Task({ task, ...props }) {
 					let state = { failing: false, short: false, ended: false };
 
 					// can stop here if shift is ended
-					if (dayjs() > dayjs(shift.end)) {
+					if (isEnded(shift.end)) {
 						state.ended = true;
 						arr.push(state);
 						return;
@@ -75,8 +79,8 @@ export default function Task({ task, ...props }) {
 
 					// if shift started and filled < slots set failing
 					if (
-						dayjs() > dayjs(shift.start) &&
-						shift.filledSlots < shift.slots
+						isStarted(shift.start) &&
+						isLackingWorkers(shift.filledSlots, shift.slots)
 					) {
 						if (failing == false) setFailing(true);
 						state.failing = true;
@@ -84,24 +88,14 @@ export default function Task({ task, ...props }) {
 
 					// if shift starts in 24h or less and is lacking workers set short notice
 					else if (
-						dayjs(shift.start).diff(dayjs(), "hour") < 24 &&
-						dayjs(shift.start).diff(dayjs(), "hour") > 0 &&
-						shift.filledSlots < shift.slots
+						isShortNotice(shift.start) &&
+						isLackingWorkers(shift.filledSlots, shift.slots)
 					) {
 						if (short == false) setShort(true);
 						state.short = true;
 					}
 					// check if shift start day is between date.start and date.end
-					if (
-						!date.start ||
-						!date.end ||
-						dayjs(shift.start).isBetween(
-							date.start,
-							date.end,
-							"day",
-							"[]"
-						)
-					) {
+					if (isBetweenDates(shift.start, date)) {
 						dayCheck = true;
 					}
 
@@ -118,7 +112,14 @@ export default function Task({ task, ...props }) {
 			setDayMatch(dayCheck);
 			setReady(true);
 		}
-	}, [date]);
+	}, [
+		date,
+		failing,
+		noUpcomingShift,
+		short,
+		task.details.applicants,
+		task.shifts,
+	]);
 
 	const handleClick = () => {
 		setOpened(!opened);
