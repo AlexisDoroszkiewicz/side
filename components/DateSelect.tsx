@@ -1,7 +1,7 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useContext, useState } from "react";
-import { Context } from "pages";
+import { Context } from "@components/FilterContext";
 
 export default function DateSelect() {
 	const { date, setDate } = useContext(Context);

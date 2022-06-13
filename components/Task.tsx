@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState, useLayoutEffect, useRef, useContext } from "react";
+import { Context } from "@components/FilterContext";
 import { css } from "@emotion/react";
 import dayjs from "dayjs";
 import Applicants from "@components/Applicants";
@@ -7,18 +8,15 @@ import ShiftsModal from "@components/ShiftsModal";
 import Status from "@components/Status";
 import Target from "@components/Target";
 import CloseBtn from "@components/CloseBtn";
-import { Context } from "pages";
 import isShortNotice from "@lib/isShortNotice";
 import isLackingWorkers from "@lib/isLackingWorkers";
 import isStarted from "@lib/isStarted";
 import isEnded from "@lib/isEnded";
-import isBetweenDates from "@lib/isBetweenDates";
 
 export default function Task({ task, ...props }) {
 	const { company, details, selection, shifts } = task;
 
-	// context used for filters
-	const { selected, date, minWorker } = useContext(Context);
+	const { selected } = useContext(Context);
 
 	// ref to target task 🎯
 	const taskRef: { current: HTMLDivElement } = useRef();
@@ -38,8 +36,6 @@ export default function Task({ task, ...props }) {
 	const [noUpcomingShift, setNoUpcomingShift] = useState(true);
 	// has x3 more applicants than expected workers
 	const [closable, setClosable] = useState(false);
-	// has a shift matching filtered day
-	const [dayMatch, setDayMatch] = useState(false);
 	// expected number of workers
 	const [expected, setExpected] = useState(0);
 	// added a ready state to only render after states have been set, since layouteffect didnt do what i want
@@ -94,10 +90,6 @@ export default function Task({ task, ...props }) {
 						if (short == false) setShort(true);
 						state.short = true;
 					}
-					// check if shift start day is between date.start and date.end
-					if (isBetweenDates(shift.start, date)) {
-						dayCheck = true;
-					}
 
 					arr.push(state);
 					// add expected workers to counter
@@ -109,17 +101,9 @@ export default function Task({ task, ...props }) {
 			setClosable(counter != 0 && task.details.applicants >= counter * 3);
 			setExpected(counter);
 			setStateArr(arr);
-			setDayMatch(dayCheck);
 			setReady(true);
 		}
-	}, [
-		date,
-		failing,
-		noUpcomingShift,
-		short,
-		task.details.applicants,
-		task.shifts,
-	]);
+	}, [failing, noUpcomingShift, short, task.details.applicants, task.shifts]);
 
 	const handleClick = () => {
 		setOpened(!opened);
@@ -133,95 +117,88 @@ export default function Task({ task, ...props }) {
 		setStatus("closed");
 	};
 
-	// skip closed tasks ❌
-	// has to be at the bottom since cant run hooks conditionally
 	if (selected != "closed" && status == "closed") return;
-	// filter logic
-	if (
-		(selected && selected != status) ||
-		(date.start && date.end && dayMatch == false) ||
-		expected < minWorker ||
-		ready == false
-	) {
-		return;
-	}
+	if (ready)
+		return (
+			<div
+				ref={taskRef}
+				css={taskContainer(
+					failing,
+					short,
+					closable,
+					expected,
+					noUpcomingShift
+				)}
+				{...props}>
+				<div>
+					<div
+						css={css`
+							display: flex;
+							justify-content: space-between;
+							align-items: flex-start;
+						`}>
+						<div
+							css={css`
+								display: flex;
+								align-items: center;
+								gap: 1rem;
+								margin-bottom: 2em;
+							`}>
+							{/* Should be using next Image component but had issues with AWS S3 domain config 🤷‍♂️ */}
+							<img
+								src={company.pictureURL}
+								alt="company logo"
+								width={"50"}
+								height={"50"}
+							/>
+							<div>
+								<h3>{company.name}</h3>
+								<p>
+									{details.jobType} :{" "}
+									<Status>{status}</Status>
+								</p>
+							</div>
+						</div>
+						{/* If expected == 0 (either no upcoming shift or all slots filled), then show close btn ❌*/}
+						{expected == 0 && status != "closed" && (
+							<CloseBtn handler={closeTask} />
+						)}
+					</div>
+				</div>
 
-	return (
-		<div
-			ref={taskRef}
-			css={taskContainer(
-				failing,
-				short,
-				closable,
-				expected,
-				noUpcomingShift
-			)}
-			{...props}>
-			<div>
 				<div
 					css={css`
 						display: flex;
 						justify-content: space-between;
-						align-items: flex-start;
+						align-items: flex-end;
 					`}>
-					<div
-						css={css`
-							display: flex;
-							align-items: center;
-							gap: 1rem;
-							margin-bottom: 2em;
-						`}>
-						{/* Should be using next Image component but had issues with AWS S3 domain config 🤷‍♂️ */}
-						<img
-							src={company.pictureURL}
-							alt="company logo"
-							width={"50"}
-							height={"50"}
+					<div>
+						<Applicants
+							amount={details.applicants}
+							expected={expected}
 						/>
-						<div>
-							<h3>{company.name}</h3>
-							<p>
-								{details.jobType} : <Status>{status}</Status>
-							</p>
-						</div>
+						<Target>{selection.target}</Target>
 					</div>
-					{/* If expected == 0 (either no upcoming shift or all slots filled), then show close btn ❌*/}
-					{expected == 0 && status != "closed" && (
-						<CloseBtn handler={closeTask} />
-					)}
+					{/* disable button if no shifts */}
+					<button
+						css={button}
+						onClick={handleClick}
+						disabled={!shifts}>
+						Shifts
+					</button>
 				</div>
-			</div>
-
-			<div
-				css={css`
-					display: flex;
-					justify-content: space-between;
-					align-items: flex-end;
-				`}>
-				<div>
-					<Applicants
-						amount={details.applicants}
+				{shifts && (
+					<ShiftsModal
+						opened={opened}
+						shifts={shifts}
+						handleClick={handleClick}
+						task={task}
 						expected={expected}
+						states={stateArr}
 					/>
-					<Target>{selection.target}</Target>
-				</div>
-				{/* disable button if no shifts */}
-				<button css={button} onClick={handleClick} disabled={!shifts}>
-					Shifts
-				</button>
+				)}
 			</div>
-			{shifts && (
-				<ShiftsModal
-					opened={opened}
-					shifts={shifts}
-					handleClick={handleClick}
-					task={task}
-					expected={expected}
-					states={stateArr}
-				/>
-			)}
-		</div>
-	);
+		);
 }
 
 const taskContainer = (

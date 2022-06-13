@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Context } from "pages";
+import { Context } from "@components/FilterContext";
 import Select from "react-select";
 
 export default function DropDown() {

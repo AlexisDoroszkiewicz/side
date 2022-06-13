@@ -4,8 +4,9 @@ import { css } from "@emotion/react";
 import data from "@public/tasks.json";
 import Task from "@components/Task";
 import Filters from "@components/Filters";
-import { createContext, useState } from "react";
-import dayjs from "dayjs";
+import { useContext, useEffect, useState } from "react";
+import { Context } from "@components/FilterContext";
+import filterTasks from "@lib/filterTasks";
 
 // For real time updates will need to look into real time database and hooks
 export async function getServerSideProps() {
@@ -26,36 +27,13 @@ interface TaskProps {
 	updatedAt?: string;
 }
 
-// should be setting types
-export interface ContextProps {
-	selected?: String;
-	setSelected?: Function;
-	date?: {
-		start?: string | number | Date | dayjs.Dayjs;
-		end?: string | number | Date | dayjs.Dayjs;
-	};
-	setDate?: Function;
-	minWorker?: Number;
-	setMinWorker?: Function;
-}
-
-export const Context = createContext<ContextProps>({
-	selected: "",
-	setSelected: () => {},
-	date: { start: 0, end: 0 },
-	setDate: () => {},
-	minWorker: 0,
-	setMinWorker: () => {},
-});
-
 const Home: NextPage<{ tasks: object[] }> = ({ tasks }) => {
-	// global filters
-	const [selected, setSelected] = useState<String>();
-	const [date, setDate] = useState<{
-		start?: string | number | Date | dayjs.Dayjs;
-		end?: string | number | Date | dayjs.Dayjs;
-	}>({});
-	const [minWorker, setMinWorker] = useState<Number>(0);
+	const filters = useContext(Context);
+	const [taskList, setTaskList] = useState(tasks);
+
+	useEffect(() => {
+		setTaskList(filterTasks(tasks, filters));
+	}, [tasks, filters]);
 
 	return (
 		<>
@@ -68,25 +46,15 @@ const Home: NextPage<{ tasks: object[] }> = ({ tasks }) => {
 				<meta name="description" content="Tasks list app"></meta>
 			</Head>
 
-			<Context.Provider
-				value={{
-					selected,
-					setSelected,
-					date,
-					setDate,
-					minWorker,
-					setMinWorker,
-				}}>
-				<Filters />
-				<main css={main}>
-					<div css={container}>
-						{/* need to add: if this has no child, show error message, useful for filters */}
-						{tasks.map((task: TaskProps) => {
-							return <Task key={task.id} task={task} />;
-						})}
-					</div>
-				</main>
-			</Context.Provider>
+			<Filters />
+			<main css={main}>
+				<div css={container}>
+					{/* need to add: if this has no child, show error message, useful for filters */}
+					{taskList.map((task: TaskProps) => {
+						return <Task key={task.id} task={task} />;
+					})}
+				</div>
+			</main>
 		</>
 	);
 };
