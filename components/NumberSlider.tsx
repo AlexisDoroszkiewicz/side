@@ -1,6 +1,6 @@
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-import { Context } from "@components/FilterContext";
+import { Context } from "pages";
 import { useContext } from "react";
 import { css } from "@emotion/react";
 
@@ -9,8 +9,8 @@ export default function NumberSlider() {
 
 	const marks = {
 		0: 0,
-		5: 5,
-		10: 10,
+		20: 20,
+		40: 40,
 	};
 	return (
 		<div
@@ -30,7 +30,7 @@ export default function NumberSlider() {
 				<>Minimum amount of workers required: {minWorker}</>
 			</small>
 			<Slider
-				max={10}
+				max={40}
 				allowCross={false}
 				marks={marks}
 				onChange={(e) => setMinWorker(e)}
